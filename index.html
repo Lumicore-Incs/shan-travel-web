@@ -94,6 +94,59 @@
       transform: translateY(-5px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
+
+    .destination-card {
+      transition: all 0.3s ease;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .destination-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .destination-image {
+      height: 220px;
+      width: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .destination-card:hover .destination-image {
+      transform: scale(1.05);
+    }
+
+    .destination-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .section-title {
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50%;
+      height: 4px;
+      background: linear-gradient(90deg, #f59e0b, #ef4444);
+      border-radius: 2px;
+    }
   </style>
 </head>
 
@@ -165,45 +218,33 @@
                   Best Destinations<br />
                   In Sri Lanka
                 </h1>
-                <p className="text-gray-600 text-base lg:text-lg mb-6 lg:mb-8 leading-relaxed">
+                <p className="text-gray-600 text-base lg:text-lg lg:mb-8 leading-relaxed">
                   Find your dream destination with us – beautiful places and budget-friendly trips for the whole family!
                 </p>
 
-                {/* Search Form */}
-                <div className="flex flex-col sm:flex-row gap-3 mb-8 bg-white py-6 px-4 rounded-xl shadow-lg border border-gray-100 w-full max-w-2xl">
-                  <div className="flex items-center border border-gray-200 rounded-lg px-4 py-3 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-xs text-gray-500 mb-1">Location</div>
-                      <input
-                        type="text"
-                        placeholder="Where are you going?"
-                        className="outline-none w-full text-gray-700 bg-transparent text-sm"
-                      />
-                    </div>
+                {/* Filter/Search Bar */}
+                <div className="absolute flex flex-col md:flex-row items-center justify-center gap-4 mb-10 bg-red-50 px-4 py-4 rounded-xl shadow-lg border border-gray-100 w-full max-w-3xl mx-auto z-10">
+                  <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                    <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+                    </svg>
+                    <input
+                      type="text"
+                      placeholder="Where are you going?"
+                      className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                    />
                   </div>
-
-                  <div className="flex items-center border border-gray-200 rounded-lg px-4 py-3 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-xs text-gray-500 mb-1">Select Date</div>
-                      <input
-                        type="text"
-                        placeholder="Choose your date"
-                        className="outline-none w-full text-gray-700 bg-transparent text-sm"
-                      />
-                    </div>
+                  <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                    <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <input
+                      type="text"
+                      placeholder="Select Date"
+                      className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                    />
                   </div>
-
-                  <button className="px-6 py-3 sm:px-8 sm:py-4 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base">
+                  <button className="px-6 py-2 bg-yellow-500 text-white rounded-full font-semibold hover:bg-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl text-sm">
                     Get Started
                   </button>
                 </div>
@@ -384,7 +425,7 @@
       );
     }
 
-
+    
     // Features Section
     function Features() {
       return (
@@ -449,8 +490,385 @@
         </section>
       );
     }
-    
-    
+
+
+    // Destination Component
+    function DestinationSection() {
+      const [selectedFilter, setSelectedFilter] = React.useState("All Destinations");
+      const [showAll, setShowAll] = React.useState(false);
+
+      const destinations = [
+        {
+          id: 1,
+          name: "Sri Dalada Maligawa",
+          location: "Kandy, Sri Lanka",
+          image: "assets/homeImage3.png",
+          rating: 4.8,
+          price: "--",
+          description: "Ancient forest monastery with tranquil surroundings.",
+          type: "Historical"
+        },
+        {
+          id: 2,
+          name: "Jaya Sri Maha Bodhi",
+          location: "Anuradhapura, Sri Lanka",
+          image: "assets/destination/ruvanvalisaya.png",
+          rating: 4.9,
+          price: "--",
+          description: "Sacred fig tree, a pilgrimage site for Buddhists.",
+          type: "Religious"
+        },
+        {
+          id: 3,
+          name: "Nallur Kandaswamy Devasthanam",
+          location: "Jaffna, Sri Lanka",
+          image: "assets/destination/nallur.png",
+          rating: 4.7,
+          price: "--",
+          description: "Famous Hindu temple with vibrant festivals.",
+          type: "Cultural"
+        },
+        {
+          id: 4,
+          name: "Arugam Bay Beach",
+          location: "Arugam, Sri Lanka",
+          image: "assets/destination/arugambe.png",
+          rating: 4.6,
+          price: "--",
+          description: "Popular surfing and relaxation spot.",
+          type: "Beach"
+        },
+        {
+          id: 5,
+          name: "Sigiriya",
+          location: "Dambulla, Sri Lanka",
+          image: "assets/destination/sigiriya.png",
+          rating: 4.8,
+          price: "--",
+          description: "Iconic rock fortress with ancient frescoes.",
+          type: "Historical"
+        },
+        {
+          id: 6,
+          name: "Coconut Tree Hill",
+          location: "Mirissa, Sri Lanka",
+          image: "assets/destination/mirissa.png",
+          rating: 4.5,
+          price: "--",
+          description: "Scenic palm tree hill overlooking the ocean.",
+          type: "Beach"
+        },
+        {
+          id: 7,
+          name: "Yala National Park",
+          location: "Yala, Sri Lanka",
+          image: "assets/homeImage1.png",
+          rating: 4.7,
+          price: "--",
+          description: "Famous wildlife sanctuary with leopards and elephants.",
+          type: "Wildlife"
+        },
+        {
+          id: 8,
+          name: "Adam's Peak",
+          location: "Ratnapura, Sri Lanka",
+          image: "assets/destination/Adam'sPeak.jpg",
+          rating: 4.6,
+          price: "--",
+          description: "Sacred mountain peak with challenging hiking trails.",
+          type: "Adventure"
+        }
+      ];
+
+      // Filter destinations based on selected filter
+      const filteredDestinations = destinations.filter(destination => {
+        if (selectedFilter === "All Destinations") {
+          return true;
+        }
+        return destination.type === selectedFilter;
+      });
+
+      // Limit to 6 destinations initially, show all if showAll is true
+      const displayedDestinations = showAll ? filteredDestinations : filteredDestinations.slice(0, 6);
+
+      return (
+        <section className="py-16 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <div className="bg-red-50 pb-1 pt-4 rounded-3xl shadow-lg mb-10">
+              <div className="text-center mb-8">
+                <h2 className="text-xs sm:text-sm font-semibold text-yellow-500 mb-3 lg:mb-4 flex items-center justify-center lg:justify-center">
+                  <span className="w-6 lg:w-8 h-0.5 bg-yellow-400 mr-2 lg:mr-3"></span>
+                  Top Destination
+                </h2>
+                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                  Let's <span className="gradient-text">Explore</span> Your Dream<br className="hidden sm:block" /> Destination Here!
+                </h2>
+                <p className="text-gray-600 max-w-2xl mx-auto text-base">
+                  Discover the most popular and breathtaking places to visit, carefully selected to make your next getaway unforgettable.
+                </p>
+              </div>
+
+              {/* Filter/Search Bar */}
+              <div className="flex flex-col md:flex-row items-center justify-center gap-2 mb-10 bg-white px-4 py-6 rounded-xl shadow-lg border border-gray-100 w-full max-w-5xl mx-auto">
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                  <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Where are you going?"
+                    className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                  />
+                </div>
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                  <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="How many people?"
+                    className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                  />
+                </div>
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                  <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Check in"
+                    className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                  />
+                </div>
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                  <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Check out"
+                    className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                  />
+                </div>
+                <button className="px-6 py-2 bg-yellow-500 text-white rounded-full font-semibold hover:bg-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl text-sm">
+                  Get Started
+                </button>
+              </div>
+            </div>
+
+            {/* Filter Options */}
+            <div className="flex flex-wrap justify-center gap-3 mb-10">
+              <button
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${selectedFilter === "All Destinations"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  }`}
+                onClick={() => {
+                  setSelectedFilter("All Destinations");
+                  setShowAll(false);
+                }}
+              >
+                All Destinations
+              </button>
+              <button
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${selectedFilter === "Historical"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  }`}
+                onClick={() => {
+                  setSelectedFilter("Historical");
+                  setShowAll(false);
+                }}
+              >
+                Historical
+              </button>
+              <button
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${selectedFilter === "Beach"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  }`}
+                onClick={() => {
+                  setSelectedFilter("Beach");
+                  setShowAll(false);
+                }}
+              >
+                Beach
+              </button>
+              <button
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${selectedFilter === "Wildlife"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  }`}
+                onClick={() => {
+                  setSelectedFilter("Wildlife");
+                  setShowAll(false);
+                }}
+              >
+                Wildlife
+              </button>
+              <button
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${selectedFilter === "Adventure"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  }`}
+                onClick={() => {
+                  setSelectedFilter("Adventure");
+                  setShowAll(false);
+                }}
+              >
+                Adventure
+              </button>
+              <button
+                className={`px-4 py-2 rounded-full font-medium text-sm transition-all ${selectedFilter === "Cultural"
+                    ? "bg-yellow-500 text-white"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                  }`}
+                onClick={() => {
+                  setSelectedFilter("Cultural");
+                  setShowAll(false);
+                }}
+              >
+                Cultural
+              </button>
+            </div>
+
+            {/* Destinations Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayedDestinations.map((destination) => (
+                <div key={destination.id} className="destination-card bg-white rounded-2xl shadow-lg overflow-hidden relative border border-gray-100">
+                  {/* Image with badge */}
+                  <div className="relative">
+                    <img
+                      src={destination.image}
+                      alt={destination.name}
+                      className="destination-image"
+                    />
+                    <div className="destination-badge rounded-lg px-3 py-1 shadow text-xs font-semibold absolute top-4 right-4 bg-white/80">
+                      {destination.type}
+                    </div>
+                  </div>
+                  {/* Content */}
+                  <div className="p-5">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-lg font-bold text-gray-900 leading-tight">{destination.name}</h3>
+                      <div className="flex items-center bg-yellow-100 px-2 py-1 rounded">
+                        <svg className="w-4 h-4 text-yellow-500 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        <span className="text-xs font-semibold">{destination.rating}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center text-gray-500 mb-2 text-sm">
+                      <svg className="w-4 h-4 mr-1 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+                      </svg>
+                      <span>{destination.location}</span>
+                    </div>
+                    <p className="text-gray-600 text-xs mb-4 min-h-[40px]">{destination.description}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-base font-bold text-gray-900">{destination.price}</span>
+
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* View More/View Less Button */}
+            {filteredDestinations.length > 6 && (
+              <div className="text-center mt-10">
+                <button
+                  onClick={() => setShowAll(!showAll)}
+                  className="px-8 py-3 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 transition-all shadow-md text-base"
+                >
+                  {showAll ? "View Less" : "View More"}
+                </button>
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    }
+
+
+    // Gallery Section (Top Destination)
+    function GallerySection() {
+      const images = [
+        "assets/destination/arugambe.png",
+        "assets/homeImage2.png",
+        "assets/destination/ruvanvalisaya.png",
+        "assets/destination/mirissa.png",
+        "assets/destination/Adam'sPeak.jpg",
+        "assets/homeImage1.png",
+        "assets/destination/sigiriya.png",
+        "assets/destination/nallur.png"
+      ];
+      return (
+        <section className="py-16 bg-white">
+          <div className="max-w-4xl mx-auto px-4 flex flex-col items-center">
+            <div className="text-center mb-8">
+              <div className="text-xs font-semibold text-yellow-500 mb-1 tracking-wide">Our Gallery<span className="inline-block align-middle w-12 h-0.5 bg-yellow-400 ml-2"></span></div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Explore our collection</h2>
+              <p className="text-lg text-gray-700">of beautiful travel moments</p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 w-full">
+              {images.map((src, idx) => (
+                <div key={idx} className="overflow-hidden rounded-2xl shadow-md">
+                  <img src={src} alt="Travel moment" className="object-cover w-full h-32 sm:h-36 md:h-40 transition-transform duration-300 hover:scale-105" />
+                </div>
+              ))}
+            </div>
+            <button className="px-8 py-3 bg-yellow-400 text-white rounded-lg font-semibold hover:bg-yellow-500 transition-all shadow-md text-base">See More</button>
+          </div>
+        </section>
+      );
+    }
+
+    // Testimonial Section
+    function TestimonialSection() {
+      return (
+        <section className="py-16 bg-white">
+          <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+            {/* Left: Text and Testimonial */}
+            <div className="flex-1 w-full">
+              <div className="mb-4">
+                <span className="text-xs font-semibold text-yellow-500 mb-1 tracking-wide inline-block">Our Feedback<span className="inline-block align-middle w-12 h-0.5 bg-yellow-400 ml-2"></span></span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-1">What Our Customers</h2>
+              <p className="text-xl text-gray-700 mb-6">Say About Us</p>
+              {/* Testimonial Card */}
+              <div className="relative bg-red-50 rounded-xl shadow p-5 max-w-md">
+                {/* Quotation Mark */}
+                <span className="absolute top-4 right-4 text-yellow-400 text-3xl font-bold select-none">"</span>
+                <div className="flex items-center mb-3">
+                  <div className="w-10 h-10 rounded-full bg-red-200 flex items-center justify-center mr-3">
+                    {/* User icon */}
+                    <svg className="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-gray-800 text-sm">Mr. Mariya</div>
+                    <div className="text-xs text-gray-500">Traveler</div>
+                  </div>
+                </div>
+                <div className="text-gray-700 text-sm leading-relaxed">
+                  This platform has been incredibly helpful for planning my travels around Sri Lanka. There are so many beautiful destinations listed here, from well-known spots to hidden gems. It made it so easy to find the perfect places to visit. The service was smooth, reliable, and very user-friendly. I highly recommend this platform to anyone looking to explore the best of Sri Lanka!
+                </div>
+              </div>
+            </div>
+            {/* Right: Overlapping Images */}
+            <div className="flex-1 w-full flex justify-center">
+              <div className="relative ">
+                <img src="assets/feedback/feedbakcImage1.png" alt="Fishermen" className="relative -left-32 w-45 h-45 object-cover rounded-2xl shadow-lg border-4 border-white z-20" />
+                <img src="assets/feedback/feedbakcImage2.png" alt="Train" className="absolute top-6 -right-12 w-60 h-60 object-cover rounded-2xl shadow-lg border-4 border-white z-10" />
+                <img src="assets/feedback/feedbakcImage3.png" alt="Temple" className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-68 h-60 object-cover rounded-2xl shadow-lg border-4 border-white z-30" />
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
     // Main App
     function App() {
       return (
@@ -459,6 +877,9 @@
           <Hero />
           <AboutSection />
           <Features />
+          <DestinationSection />
+          <GallerySection />
+          <TestimonialSection />
         </>
       );
     }
