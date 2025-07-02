@@ -6,9 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sri Lanka Travel UI</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
   <style>
     .homesection {
@@ -147,6 +149,10 @@
       background: linear-gradient(90deg, #f59e0b, #ef4444);
       border-radius: 2px;
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 
@@ -154,8 +160,9 @@
   <div id="root"></div>
   <script type="text/babel">
     // Header/Navbar
-    function Navbar() {
+    function Navbar({ iconToggled, setIconToggled }) {
       const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+      const [buttonClicked, setButtonClicked] = React.useState(false);
 
       return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -166,11 +173,11 @@
               </div>
             </div>
             <nav className={`${mobileMenuOpen ? 'block' : 'hidden'} md:flex md:space-x-8 text-gray-700 font-medium absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-4 md:px-0 py-2 md:py-0`}>
-              <a href="#" className="block py-2 text-yellow-500 border-b-2 border-yellow-500 md:inline md:pb-1">Home</a>
-              <a href="#" className="block py-2 hover:text-yellow-500 transition-colors md:inline">About</a>
-              <a href="#" className="block py-2 hover:text-yellow-500 transition-colors md:inline">Packages</a>
-              <a href="#" className="block py-2 hover:text-yellow-500 transition-colors md:inline">Gallery</a>
-              <a href="#" className="block py-2 hover:text-yellow-500 transition-colors md:inline">Contact</a>
+              <a href="#home" className="block py-2 text-yellow-500 border-b-2 border-yellow-500 md:inline md:pb-1">Home</a>
+              <a href="#about" className="block py-2 hover:text-yellow-500 transition-colors md:inline">About</a>
+              <a href="#features" className="block py-2 hover:text-yellow-500 transition-colors md:inline">Packages</a>
+              <a href="#gallery" className="block py-2 hover:text-yellow-500 transition-colors md:inline">Gallery</a>
+              <a href="#contact" className="block py-2 hover:text-yellow-500 transition-colors md:inline">Contact</a>
             </nav>
             <div className="flex items-center space-x-4">
               <button className="text-gray-500 hover:text-yellow-500 transition-colors hidden md:block">
@@ -178,10 +185,23 @@
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
-              <button className="text-gray-500 hover:text-yellow-500 transition-colors hidden md:block">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
+              <button
+                className={`transition-colors hidden md:block rounded-full p-1
+                  ${iconToggled ? 'bg-yellow-400 text-white' : 'bg-white text-gray-500 hover:text-yellow-500'}`}
+                onClick={() => setIconToggled((prev) => !prev)}
+              >
+                {iconToggled ? (
+                  // Sun icon (toggled)
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="2" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.02 0l-1.41 1.41M6.34 17.66l-1.41 1.41" />
+                  </svg>
+                ) : (
+                  // Moon icon (default)
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                )}
               </button>
               <button
                 className="md:hidden focus:outline-none"
@@ -197,12 +217,54 @@
       );
     }
 
+    // CountUpOnVisible Component
+    function CountUpOnVisible({ end, duration = 1500, suffix = '', className = '' }) {
+      const [count, setCount] = React.useState(0);
+      const ref = React.useRef();
+      const [hasAnimated, setHasAnimated] = React.useState(false);
 
+      React.useEffect(() => {
+        let observer;
+        let timeout;
+        if (ref.current && !hasAnimated) {
+          observer = new window.IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                setHasAnimated(true);
+                let start = 0;
+                const increment = end / (duration / 16);
+                function animate() {
+                  start += increment;
+                  if (start < end) {
+                    setCount(Math.floor(start));
+                    timeout = requestAnimationFrame(animate);
+                  } else {
+                    setCount(end);
+                  }
+                }
+                animate();
+                observer.disconnect();
+              }
+            },
+            { threshold: 0.3 }
+          );
+          observer.observe(ref.current);
+        }
+        return () => {
+          if (observer && observer.disconnect) observer.disconnect();
+          if (timeout) cancelAnimationFrame(timeout);
+        };
+      }, [end, duration, hasAnimated]);
+
+      return (
+        <span ref={ref} className={className}>{count}{suffix}</span>
+      );
+    }
 
     // Hero Section
-    function Hero() {
+    function Hero({ iconToggled }) {
       return (
-        <section className="pt-8 pb-8 homesection">
+        <section id="home" className="pt-8 pb-8 homesection" data-aos="fade-up">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 h-full">
               {/* Left Content */}
@@ -213,12 +275,12 @@
                     <div className="absolute -bottom-1 left-0 w-16 h-1 bg-yellow-400 rounded-full"></div>
                   </span>
                 </div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 lg:mb-6 leading-tight text-gray-900">
+                <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 lg:mb-6 leading-tight ${iconToggled ? 'text-white' : 'text-gray-900'}`}>
                   Discover The<br />
                   Best Destinations<br />
                   In Sri Lanka
                 </h1>
-                <p className="text-gray-600 text-base lg:text-lg lg:mb-8 leading-relaxed">
+                <p className={`${iconToggled ? 'text-gray-300' : 'text-gray-600'} text-base lg:text-lg lg:mb-8 leading-relaxed`}>
                   Find your dream destination with us – beautiful places and budget-friendly trips for the whole family!
                 </p>
 
@@ -255,7 +317,7 @@
                 <div className="grid grid-cols-2 gap-3 sm:gap-4 h-auto">
                   {/* Top Left Card */}
                   <div className="relative">
-                    <div className="image-card h-48 sm:h-60 lg:h-72 bg-gradient-to-br from-orange-400 to-orange-500 rounded-2xl shadow-xl overflow-hidden">
+                    <div className="image-card h-48 sm:h-60 lg:h-72 bg-gradient-to-br from-orange-400 to-orange-500 rounded-3xl shadow-xl overflow-hidden">
                       <img
                         src="assets/homeImage1.png"
                         alt="pinnavala"
@@ -263,8 +325,8 @@
                       />
                     </div>
                     <div className="floating-badge absolute top-1/2 -left-32 transform -translate-y-1/2 rounded-xl px-8 py-6 shadow-lg border border-white/20 flex flex-col items-center w-max hidden lg:block">
-                      <div className="text-lg font-bold text-gray-800">100+ Destinations</div>
-                      <div className="text-xs text-gray-600 text-center">More than 100 travelers use this platform</div>
+                      <span className={`text-lg font-bold ${iconToggled ? 'text-white' : 'text-gray-800'}`}><CountUpOnVisible end={100} suffix="+" /> Destinations</span>
+                      <div className={`text-xs text-center ${iconToggled ? 'text-blue-500' : 'text-gray-600'}`}>More than 100 travelers use this platform</div>
                     </div>
                   </div>
 
@@ -278,8 +340,8 @@
                       />
                     </div>
                     <div className="floating-badge absolute -top-5 sm:-top-7 left-1/2 transform -translate-x-1/2 rounded-xl px-3 sm:px-4 py-1 sm:py-2 shadow-lg border border-white/20 hidden sm:block">
-                      <div className="text-sm font-bold text-gray-800">100+</div>
-                      <div className="text-xs text-gray-600">Verified</div>
+                      <CountUpOnVisible end={100} suffix="+" className={`text-lg font-bold ${iconToggled ? 'text-white' : 'text-gray-800'}`} />
+                      <div className={`text-xs text-center ${iconToggled ? 'text-blue-500' : 'text-gray-600'}`}>Verified</div>
                     </div>
                   </div>
 
@@ -293,7 +355,7 @@
                   </div>
 
                   {/* Bottom Right Card */}
-                  <div className="image-card h-48 sm:h-60 lg:h-72 bg-gradient-to-br from-purple-400 to-purple-500 rounded-2xl shadow-xl overflow-hidden -mt-8 sm:-mt-12">
+                  <div className="image-card h-48 sm:h-60 lg:h-72 bg-gradient-to-br from-purple-400 to-purple-500 rounded-3xl shadow-xl overflow-hidden -mt-8 sm:-mt-12">
                     <img
                       src="assets/homeImage4.png"
                       alt="galle"
@@ -314,9 +376,9 @@
     }
 
     // About Section Component with 3 Images
-    function AboutSection() {
+    function AboutSection({ iconToggled }) {
       return (
-        <section className="py-12 lg:py-24 bg-white">
+        <section id="about" className={`py-12 lg:py-24 ${iconToggled ? 'bg-black' : 'bg-white'}`} data-aos="fade-up">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-24">
               {/* Left Content - Image Gallery */}
@@ -332,11 +394,11 @@
                     <div className="floating-badge absolute bottom-6 left-6 right-6 bg-white/90 p-3 rounded-xl shadow-md">
                       <div className="flex justify-between">
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-yellow-500">2000+</div>
+                          <CountUpOnVisible end={2000} suffix="+" className="text-3xl font-bold text-yellow-500" />
                           <div className="text-sm text-gray-800">Happy Travelers</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-3xl font-bold text-yellow-500">100+</div>
+                          <CountUpOnVisible end={100} suffix="+" className="text-3xl font-bold text-yellow-500" />
                           <div className="text-sm text-gray-800">Destinations</div>
                         </div>
                       </div>
@@ -380,10 +442,10 @@
                   <span className="w-6 lg:w-8 h-0.5 bg-yellow-400 mr-2 lg:mr-3"></span>
                   ABOUT US
                 </h2>
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 lg:mb-6 leading-tight text-center lg:text-left">
+                <h3 className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 lg:mb-6 leading-tight text-center lg:text-left ${iconToggled ? 'text-white' : 'text-gray-900'}`}>
                   We Recommended <span className="gradient-text">Beautiful Destinations</span> Every Month
                 </h3>
-                <p className="text-gray-600 text-base lg:text-lg mb-6 lg:mb-8 leading-relaxed text-center lg:text-left">
+                <p className={`${iconToggled ? 'text-gray-300' : 'text-gray-600'} text-base lg:text-lg mb-6 lg:mb-8 leading-relaxed text-center lg:text-left`}>
                   Find your dream destination with us - beautiful places and budget-friendly trips for the whole family!
                 </p>
 
@@ -395,8 +457,8 @@
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm lg:text-base">Best Price Guarantee</h4>
-                      <p className="text-gray-600 text-xs lg:text-sm">We offer the best prices</p>
+                      <h4 className={`font-semibold text-sm lg:text-base ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Best Price Guarantee</h4>
+                      <p className="text-gray-700 text-xs lg:text-sm">We offer the best prices</p>
                     </div>
                   </div>
 
@@ -407,7 +469,7 @@
                       </svg>
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm lg:text-base">24/7 Support</h4>
+                      <h4 className={`font-semibold text-sm lg:text-base  ${iconToggled ? 'text-white' : 'text-gray-900'}`}>24/7 Support</h4>
                       <p className="text-gray-600 text-xs lg:text-sm">Always ready to help</p>
                     </div>
                   </div>
@@ -427,9 +489,9 @@
 
     
     // Features Section
-    function Features() {
+    function Features({ iconToggled }) {
       return (
-        <section className="py-16 bg-white">
+        <section id="features" className={`py-16 ${iconToggled ? 'bg-black' : 'bg-white'}`} data-aos="fade-up">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Features Grid */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -439,10 +501,10 @@
                   <span className="w-6 lg:w-8 h-0.5 bg-yellow-400 mr-2 lg:mr-3"></span>
                   What We Give
                 </h2>
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 lg:mb-6 leading-tight text-center lg:text-left">
-                  Best Features <span className="text-gray-400">For You</span>
+                <h3 className={`text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 lg:mb-6 leading-tight text-center lg:text-left ${iconToggled ? 'text-white' : 'text-gray-900'}`}>
+                  Best Features <span className={iconToggled ? 'text-gray-300' : 'text-gray-400'}>For You</span>
                 </h3>
-                <p className="text-gray-600 max-w-2xl mx-auto justify-start">
+                <p className={`${iconToggled ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto justify-start`}>
                   Find your dream destination with us – beautiful places and budget-friendly trips for the whole family!
                 </p>
               </div>
@@ -493,7 +555,7 @@
 
 
     // Destination Component
-    function DestinationSection() {
+    function DestinationSection({ iconToggled }) {
       const [selectedFilter, setSelectedFilter] = React.useState("All Destinations");
       const [showAll, setShowAll] = React.useState(false);
 
@@ -592,7 +654,7 @@
       const displayedDestinations = showAll ? filteredDestinations : filteredDestinations.slice(0, 6);
 
       return (
-        <section className="py-16 bg-gray-50">
+        <section id="destinations" className={`py-16 ${iconToggled ? 'bg-black' : 'bg-gray-50'}`} data-aos="fade-up">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Section Header */}
             <div className="bg-red-50 pb-1 pt-4 rounded-3xl shadow-lg mb-10">
@@ -601,10 +663,10 @@
                   <span className="w-6 lg:w-8 h-0.5 bg-yellow-400 mr-2 lg:mr-3"></span>
                   Top Destination
                 </h2>
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                <h2 className={`text-3xl sm:text-4xl font-bold mb-2 `}>
                   Let's <span className="gradient-text">Explore</span> Your Dream<br className="hidden sm:block" /> Destination Here!
                 </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto text-base">
+                <p className={` text-base max-w-2xl mx-auto`}>
                   Discover the most popular and breathtaking places to visit, carefully selected to make your next getaway unforgettable.
                 </p>
               </div>
@@ -735,8 +797,8 @@
 
             {/* Destinations Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {displayedDestinations.map((destination) => (
-                <div key={destination.id} className="destination-card bg-white rounded-2xl shadow-lg overflow-hidden relative border border-gray-100">
+              {displayedDestinations.map((destination, idx) => (
+                <div key={destination.id} className="destination-card bg-white rounded-2xl shadow-lg overflow-hidden relative border border-gray-100" data-aos="fade-up" data-aos-delay={idx * 80}>
                   {/* Image with badge */}
                   <div className="relative">
                     <img
@@ -793,7 +855,7 @@
 
 
     // Gallery Section (Top Destination)
-    function GallerySection() {
+    function GallerySection({ iconToggled }) {
       const images = [
         "assets/destination/arugambe.png",
         "assets/homeImage2.png",
@@ -805,16 +867,16 @@
         "assets/destination/nallur.png"
       ];
       return (
-        <section className="py-16 bg-white">
+        <section id="gallery" className={`py-16 ${iconToggled ? 'bg-black' : 'bg-white'}`} data-aos="fade-up">
           <div className="max-w-4xl mx-auto px-4 flex flex-col items-center">
             <div className="text-center mb-8">
               <div className="text-xs font-semibold text-yellow-500 mb-1 tracking-wide">Our Gallery<span className="inline-block align-middle w-12 h-0.5 bg-yellow-400 ml-2"></span></div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Explore our collection</h2>
-              <p className="text-lg text-gray-700">of beautiful travel moments</p>
+              <h2 className={`text-3xl sm:text-4xl font-bold mb-2 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Explore our collection</h2>
+              <p className={`text-lg ${iconToggled ? 'text-gray-300' : 'text-gray-700'}`}>of beautiful travel moments</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 w-full">
               {images.map((src, idx) => (
-                <div key={idx} className="overflow-hidden rounded-2xl shadow-md">
+                <div key={idx} className="overflow-hidden rounded-2xl shadow-md" data-aos="zoom-in" data-aos-delay={idx * 60}>
                   <img src={src} alt="Travel moment" className="object-cover w-full h-32 sm:h-36 md:h-40 transition-transform duration-300 hover:scale-105" />
                 </div>
               ))}
@@ -826,17 +888,17 @@
     }
 
     // Testimonial Section
-    function TestimonialSection() {
+    function TestimonialSection({ iconToggled }) {
       return (
-        <section className="py-16 bg-white">
+        <section id="testimonials" className={`py-16 ${iconToggled ? 'bg-black' : 'bg-white'}`} data-aos="fade-up">
           <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
             {/* Left: Text and Testimonial */}
             <div className="flex-1 w-full">
               <div className="mb-4">
                 <span className="text-xs font-semibold text-yellow-500 mb-1 tracking-wide inline-block">Our Feedback<span className="inline-block align-middle w-12 h-0.5 bg-yellow-400 ml-2"></span></span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight mb-1">What Our Customers</h2>
-              <p className="text-xl text-gray-700 mb-6">Say About Us</p>
+              <h2 className={`text-3xl sm:text-4xl font-bold leading-tight mb-1 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>What Our Customers</h2>
+              <p className={`text-xl mb-6 ${iconToggled ? 'text-gray-300' : 'text-gray-700'}`}>Say About Us</p>
               {/* Testimonial Card */}
               <div className="relative bg-red-50 rounded-xl shadow p-5 max-w-md">
                 {/* Quotation Mark */}
@@ -856,8 +918,8 @@
                 </div>
               </div>
             </div>
-            {/* Right: Overlapping Images */}
-            <div className="flex-1 w-full flex justify-center">
+            {/* Right: Overlapping Images (hidden on mobile) */}
+            <div className="flex-1 w-full flex justify-center hidden md:flex">
               <div className="relative ">
                 <img src="assets/feedback/feedbakcImage1.png" alt="Fishermen" className="relative -left-32 w-45 h-45 object-cover rounded-2xl shadow-lg border-4 border-white z-20" />
                 <img src="assets/feedback/feedbakcImage2.png" alt="Train" className="absolute top-6 -right-12 w-60 h-60 object-cover rounded-2xl shadow-lg border-4 border-white z-10" />
@@ -869,18 +931,119 @@
       );
     }
 
+    // Discount Banner Section
+    function DiscountBanner({ iconToggled }) {
+      return (
+        <section id="discount" className="py-12 px-2 sm:px-6 flex justify-center items-center bg-transparent" data-aos="zoom-in">
+          <div className="w-full max-w-6xl bg-yellow-100 rounded-3xl shadow-lg px-8 py-12 flex flex-col items-center text-center">
+            <h2 className={`text-3xl sm:text-4xl font-bold mb-2 ${iconToggled ? 'text-black' : 'text-gray-900'}`}>
+              Let's Don't Miss The 30% Discount &
+            </h2>
+            <h3 className={`text-2xl sm:text-3xl font-semibold mb-4 ${iconToggled ? 'text-black' : 'text-gray-900'}`}>
+              Explore The Beauty of the Sir Lanka
+            </h3>
+            <p className={`text-base mb-8 max-w-2xl ${iconToggled ? 'text-black' : 'text-gray-600'}`}>
+              Take advantage of this limited-time offer and discover the breathtaking beauty of Sri Lanka at a special 30% discount!
+            </p>
+            <button className="px-8 py-3 bg-yellow-400 text-white rounded-lg font-semibold hover:bg-yellow-500 transition-all shadow-md text-lg">
+              Get Started
+            </button>
+          </div>
+        </section>
+      );
+    }
+
+    // Footer Section
+    function Footer({ iconToggled }) {
+      return (
+        <footer id="contact" className={`${iconToggled ? 'bg-black' : 'bg-white'} border-t border-gray-200 mt-8`} data-aos="fade-up">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row md:justify-between md:items-start gap-10">
+            {/* Left: Logo and Help */}
+            <div className="flex-1 min-w-[220px] flex flex-col items-start">
+              <img src="assets/logo.png" alt="Logo" className="h-12 mb-3" />
+              <p className="text-gray-600 text-sm mb-4 max-w-xs">
+                We're here to help! Don't hesitate to reach out if you need anything or have any questions—we're always happy to assist.
+              </p>
+              <div className="flex space-x-4 mt-2">
+                <a href="#" className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 hover:bg-yellow-200 transition">
+                  {/* Facebook */}
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.877v-6.987h-2.54v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.632.771-1.632 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12"/></svg>
+                </a>
+                <a href="#" className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 hover:bg-yellow-200 transition">
+                  {/* Instagram */}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+                </a>
+                <a href="#" className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 hover:bg-yellow-200 transition">
+                  {/* WhatsApp */}
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.52 3.48A12.07 12.07 0 0012 0C5.37 0 0 5.37 0 12c0 2.12.55 4.18 1.6 6.01L0 24l6.09-1.59A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zM12 22c-1.85 0-3.68-.5-5.25-1.44l-.37-.22-3.62.95.97-3.52-.24-.37A9.94 9.94 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.8c-.28-.14-1.65-.81-1.9-.9-.25-.09-.43-.14-.61.14-.18.28-.7.9-.86 1.08-.16.18-.32.2-.6.07-.28-.14-1.18-.44-2.25-1.4-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.34.42-.51.14-.17.18-.29.28-.48.09-.19.05-.36-.02-.5-.07-.14-.61-1.47-.84-2.01-.22-.53-.45-.46-.62-.47-.16-.01-.36-.01-.56-.01-.19 0-.5.07-.76.34-.26.27-1 1-1 2.43 0 1.43 1.03 2.81 1.18 3.01.15.2 2.03 3.1 4.93 4.23.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33z"/></svg>
+                </a>
+              </div>
+            </div>
+            {/* Center: Links */}
+            <div className="flex-1 min-w-[180px] flex flex-col md:flex-row gap-10 justify-center">
+              <div>
+                <h4 className={`font-bold mb-3 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Company</h4>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li><a href="#home" className="hover:text-yellow-500">Home</a></li>
+                  <li><a href="#about" className="hover:text-yellow-500">About</a></li>
+                  <li><a href="#features" className="hover:text-yellow-500">Packages</a></li>
+                  <li><a href="#gallery" className="hover:text-yellow-500">Gallery</a></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className={`font-bold mb-3 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Services</h4>
+                <ul className="space-y-2 text-gray-700 text-sm">
+                  <li>Tour Packages</li>
+                  <li>Custom Trip Planning</li>
+                  <li>Travel Photography</li>
+                  <li>Group Travel & Corporate Packages</li>
+                </ul>
+              </div>
+            </div>
+            {/* Right: Newsletter and Map */}
+            <div className="flex-1 min-w-[220px] flex flex-col items-start md:items-end">
+              <h4 className={`font-bold mb-3 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Subscribe To newsletter</h4>
+              <form className="flex flex-col sm:flex-row items-center gap-2 mb-4 w-full max-w-xs">
+                <input type="email" placeholder="Enter Your Email" className="px-3 py-2 border border-gray-300 rounded w-full text-sm focus:outline-none focus:border-yellow-400" />
+                <button type="submit" className="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 font-semibold text-sm">Subscribe</button>
+              </form>
+              <h4 className={`font-bold mb-2 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>View on Map</h4>
+              <div className="w-full max-w-xs md:max-w-sm h-28 bg-gray-100 rounded overflow-hidden border border-gray-200">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3968.224125765262!2d80.4080079!3d5.9638354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1151d9f9a71cf%3A0x49db91a81458b9fe!2sShan%20Star!5e0!3m2!1sen!2slk!4v1751441643653!5m2!1sen!2slk" style={{border:0, width:'100%', height:'100%'}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Shan Star Map"></iframe>
+              </div>
+            </div>
+          </div>
+          {/* Bottom Bar */}
+          <div className={`border-t border-gray-200 py-4 px-4 flex flex-col md:flex-row justify-between items-center text-xs ${iconToggled ? 'text-gray-300 bg-black' : 'text-gray-500 bg-white'}`}>
+            <div className="mb-2 md:mb-0">Copyright@2025 Lumicore Inc | Design by Lumicore Inc</div>
+            <div className="flex space-x-3">
+              <a href="#" className="hover:text-yellow-500">Terms of Use</a>
+              <span>|</span>
+              <a href="#" className="hover:text-yellow-500">Privacy & Policy</a>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
     // Main App
     function App() {
+      const [iconToggled, setIconToggled] = React.useState(false);
+      React.useEffect(() => {
+        if (window.AOS) window.AOS.init({ once: true, duration: 900, easing: 'ease-out-cubic' });
+      }, []);
       return (
-        <>
-          <Navbar />
-          <Hero />
-          <AboutSection />
-          <Features />
-          <DestinationSection />
-          <GallerySection />
-          <TestimonialSection />
-        </>
+        <div className={iconToggled ? 'bg-black min-h-screen transition-colors duration-500' : 'bg-white min-h-screen transition-colors duration-500'}>
+          <Navbar iconToggled={iconToggled} setIconToggled={setIconToggled} />
+          <Hero iconToggled={iconToggled} />
+          <AboutSection iconToggled={iconToggled} />
+          <Features iconToggled={iconToggled} />
+          <DestinationSection iconToggled={iconToggled} />
+          <GallerySection iconToggled={iconToggled} />
+          <TestimonialSection iconToggled={iconToggled} />
+          <DiscountBanner iconToggled={iconToggled} />
+          <Footer iconToggled={iconToggled} />
+        </div>
       );
     }
 
