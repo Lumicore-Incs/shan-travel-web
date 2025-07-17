@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4 Days Miniature Tour of Sri Lanka - Beauty Lanka Travels</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding-top: 64px;
+            /* Add padding to account for fixed navbar */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-top: 0;
+            /* Removed margin-top since navbar is sticky */
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        #nav-button {
+            display: flex !important;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #2a5298;
+            font-size: 1.4rem;
+            margin: 25px 0 15px 0;
+        }
+
+        /* Highlights */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .highlight-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        .highlight-item::before {
+            content: "✅";
+            margin-right: 10px;
+        }
+
+        /* Itinerary */
+        .day-card {
+            background: #f8f9fa;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border-left: 4px solid #007bff;
+        }
+
+        .day-header {
+            background: #007bff;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+        }
+
+        .day-content {
+            padding: 20px;
+        }
+
+        .day-content ul {
+            list-style: none;
+        }
+
+        .day-content li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .day-content li:last-child {
+            border-bottom: none;
+        }
+
+        .day-content li::before {
+            content: "📍";
+            margin-right: 10px;
+        }
+
+        /* Package Details */
+        .package-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .includes,
+        .excludes {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .includes h4 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        .excludes h4 {
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+
+        .package-grid ul {
+            list-style: none;
+        }
+
+        .package-grid li {
+            padding: 8px 0;
+        }
+
+        .includes li::before {
+            content: "✔";
+            color: #28a745;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .excludes li::before {
+            content: "✘";
+            color: #dc3545;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Booking */
+        .booking {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 10px;
+        }
+
+        /* Reviews */
+        .reviews {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .review-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .review-text {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: #666;
+        }
+
+        /* Travel Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tip-item {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .package-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+
+        /* Icons */
+        .icon {
+            font-size: 1.5rem;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            margin: 20px 10px;
+            transition: background 0.3s;
+        }
+
+        .cta-button:hover {
+            background: #218838;
+        }
+
+        /* Navbar Styles */
+        .custom-shadow {
+            box-shadow: 0px 4px 10px rgba(37, 150, 190, 0.5);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #f59e0b, #ef4444);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar-root"></div>
+    <script type="text/babel">
+
+
+        // Header/Navbar
+        function Navbar({ iconToggled, setIconToggled }) {
+            const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+            const [packagesDropdownOpen, setPackagesDropdownOpen] = React.useState(false);
+
+            // Function to get nav link styles
+            const getNavLinkStyle = (sectionName) => {
+                return `block py-2 transition-colors md:inline md:pb-1 text-gray-700 hover:text-yellow-500`;
+            };
+
+            return (
+                <>
+                    <header className="bg-white custom-shadow fixed top-0 left-0 right-0 z-50">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-3">
+                            <div className="flex items-center space-x-3">
+                                <div className="w-32 h-10 rounded-lg flex items-center justify-center">
+                                    <img src="assets/logo.png" alt="Logo" className="h-8 object-contain" />
+                                </div>
+                            </div>
+                            <nav className={`${mobileMenuOpen ? 'block' : 'hidden'} md:flex md:space-x-8 text-gray-700 font-medium absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent shadow-md md:shadow-none px-4 md:px-0 py-2 md:py-0`}>
+                                <a href="index.html#home" className={getNavLinkStyle('home')}>Home</a>
+                                <a href="index.html#about" className={getNavLinkStyle('about')}>About</a>
+
+                                {/* Desktop Packages Dropdown */}
+                                <div className="relative group hidden md:block">
+                                    <button id="nav-button"
+                                        className={`${getNavLinkStyle('features')} flex items-center justify-center space-x-1`}
+                                        onMouseEnter={() => setPackagesDropdownOpen(true)}
+                                        onMouseLeave={() => setPackagesDropdownOpen(false)}
+                                    >
+                                        <span className="flex items-center">Packages</span>
+                                        <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </button>
+
+                                    {/* Desktop Dropdown Menu */}
+                                    <div
+                                        className={`absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 transition-all duration-200 ${packagesDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                                            }`}
+                                        onMouseEnter={() => setPackagesDropdownOpen(true)}
+                                        onMouseLeave={() => setPackagesDropdownOpen(false)}
+                                    >
+                                        <a
+                                            href="sri-lanka-tour.html"
+                                            className="block px-4 py-2 text-sm text-yellow-600 bg-yellow-50 font-medium"
+                                        >
+                                            <div className="flex items-center space-x-2">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                                                </svg>
+                                                <span>4 Days Miniature Tour</span>
+                                            </div>
+                                        </a>
+                                        <a
+                                            href="#"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors"
+                                        >
+                                            <div className="flex items-center space-x-2">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                                                </svg>
+                                                <span>7 Days Cultural Tour</span>
+                                            </div>
+                                        </a>
+                                        <a
+                                            href="#"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors"
+                                        >
+                                            <div className="flex items-center space-x-2">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                                                </svg>
+                                                <span>10 Days Complete Tour</span>
+                                            </div>
+                                        </a>
+                                        <div className="border-t border-gray-100 my-1"></div>
+                                        <a
+                                            href="#"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors"
+                                        >
+                                            <div className="flex items-center space-x-2">
+                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                                </svg>
+                                                <span>Custom Package</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                {/* Mobile Packages Menu */}
+                                <div className="md:hidden">
+                                    <div className="py-2">
+                                        <div className="text-gray-700 font-medium mb-2">Packages</div>
+                                        <div className="pl-4 space-y-1">
+                                            <a
+                                                href="sri-lanka-tour.html"
+                                                className="block py-1 text-sm text-yellow-600 font-medium"
+                                            >
+                                                4 Days Miniature Tour
+                                            </a>
+                                            <a
+                                                href="#"
+                                                className="block py-1 text-sm text-gray-600 hover:text-yellow-500 transition-colors"
+                                            >
+                                                7 Days Cultural Tour
+                                            </a>
+                                            <a
+                                                href="#"
+                                                className="block py-1 text-sm text-gray-600 hover:text-yellow-500 transition-colors"
+                                            >
+                                                10 Days Complete Tour
+                                            </a>
+                                            <a
+                                                href="#"
+                                                className="block py-1 text-sm text-gray-600 hover:text-yellow-500 transition-colors"
+                                            >
+                                                Custom Package
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="index.html#destinations" className={getNavLinkStyle('destinations')}>Destinations</a>
+                                <a href="index.html#gallery" className={getNavLinkStyle('gallery')}>Gallery</a>
+                                <a href="index.html#contact" className={getNavLinkStyle('contact')}>Contact</a>
+                            </nav>
+                            <div className="flex items-center space-x-4">
+                                <button className="text-gray-500 hover:text-yellow-500 transition-colors hidden md:block">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                                <button
+                                    className={`transition-colors hidden md:block rounded-full p-1
+                                        ${iconToggled ? 'bg-yellow-400 text-white' : 'bg-white text-gray-500 hover:text-yellow-500'}`}
+                                    onClick={() => setIconToggled((prev) => !prev)}
+                                >
+                                    {iconToggled ? (
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="2" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.02 0l-1.41 1.41M6.34 17.66l-1.41 1.41" />
+                                        </svg>
+                                    ) : (
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                        </svg>
+                                    )}
+                                </button>
+                                <button
+                                    className="md:hidden focus:outline-none"
+                                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                </>
+            );
+        }
+
+        // Footer Section
+        function Footer({ iconToggled }) {
+            return (
+                <footer id="contact" className={`${iconToggled ? 'bg-black' : 'bg-white'} border-t border-gray-200 mt-8`} data-aos="fade-up">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col md:flex-row md:justify-between md:items-start gap-10">
+                        {/* Left: Logo and Help */}
+                        <div className="flex-1 min-w-[220px] flex flex-col items-start">
+                            <img src="assets/logo.png" alt="Logo" className="h-12 mb-3" />
+                            <p className="text-gray-600 text-sm mb-4 max-w-xs">
+                                We're here to help! Don't hesitate to reach out if you need anything or have any questions—we're always happy to assist.
+                            </p>
+
+                            {/* Email Contact */}
+                            <div className="flex items-center mb-4">
+                                <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 mr-3 hover:bg-yellow-200 transition">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div className="text-sm font-medium text-gray-900">Email us at:</div>
+                                    <a href="mailto:shanstar006@gmail.com" className="text-sm text-yellow-500 hover:text-yellow-600 transition-colors">
+                                        shanstar006@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="flex space-x-4 mt-2">
+                                <a href="#" className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 hover:bg-yellow-200 transition">
+                                    {/* Facebook */}
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 4.991 3.657 9.128 8.438 9.877v-6.987h-2.54v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.632.771-1.632 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12" /></svg>
+                                </a>
+                                <a href="#" className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 hover:bg-yellow-200 transition">
+                                    {/* Instagram */}
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><circle cx="17.5" cy="6.5" r="1.5" /></svg>
+                                </a>
+                                <a
+                                    href="https://wa.me/+94710190304?text=Hello! I would like to know more about your travel packages."
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500 hover:bg-yellow-200 transition"
+                                    title="Chat with us on WhatsApp"
+                                >
+                                    {/* WhatsApp */}
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.52 3.48A12.07 12.07 0 0012 0C5.37 0 0 5.37 0 12c0 2.12.55 4.18 1.6 6.01L0 24l6.09-1.59A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zM12 22c-1.85 0-3.68-.5-5.25-1.44l-.37-.22-3.62.95.97-3.52-.24-.37A9.94 9.94 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.8c-.28-.14-1.65-.81-1.9-.9-.25-.09-.43-.14-.61.14-.18.28-.7.9-.86 1.08-.16.18-.32.2-.6.07-.28-.14-1.18-.44-2.25-1.4-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.34.42-.51.14-.17.18-.29.28-.48.09-.19.05-.36-.02-.5-.07-.14-.61-1.47-.84-2.01-.22-.53-.45-.46-.62-.47-.16-.01-.36-.01-.56-.01-.19 0-.5.07-.76.34-.26.27-1 1-1 2.43 0 1.43 1.03 2.81 1.18 3.01.15.2 2.03 3.1 4.93 4.23.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33z" /></svg>
+                                </a>
+                            </div>
+                        </div>
+                        {/* Center: Links */}
+                        <div className="flex-1 min-w-[180px] flex flex-col md:flex-row gap-10 justify-center">
+                            <div>
+                                <h4 className={`font-bold mb-3 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Company</h4>
+                                <ul className="space-y-2 text-gray-700 text-sm">
+                                    <li><a href="index.html#home" className="hover:text-yellow-500">Home</a></li>
+                                    <li><a href="index.html#about" className="hover:text-yellow-500">About</a></li>
+                                    <li><a href="index.html#features" className="hover:text-yellow-500">Packages</a></li>
+                                    <li><a href="index.html#gallery" className="hover:text-yellow-500">Gallery</a></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 className={`font-bold mb-3 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Services</h4>
+                                <ul className="space-y-2 text-gray-700 text-sm">
+                                    <li>Tour Packages</li>
+                                    <li>Custom Trip Planning</li>
+                                    <li>Travel Photography</li>
+                                    <li>Group Travel & Corporate Packages</li>
+                                </ul>
+                            </div>
+                        </div>
+                        {/* Right: Newsletter and Map */}
+                        <div className="flex-1 min-w-[220px] flex flex-col items-start md:items-end">
+                            <h4 className={`font-bold mb-3 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>Subscribe To newsletter</h4>
+                            <form className="flex flex-col sm:flex-row items-center gap-2 mb-4 w-full max-w-xs">
+                                <input type="email" placeholder="Enter Your Email" className="px-3 py-2 border border-gray-300 rounded w-full text-sm focus:outline-none focus:border-yellow-400" />
+                                <button type="submit" className="bg-yellow-400 text-white px-4 py-2 rounded hover:bg-yellow-500 font-semibold text-sm">Subscribe</button>
+                            </form>
+                            <h4 className={`font-bold mb-2 ${iconToggled ? 'text-white' : 'text-gray-900'}`}>View on Map</h4>
+                            <div className="w-full max-w-xs md:max-w-sm h-28 bg-gray-100 rounded overflow-hidden border border-gray-200">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3968.224125765262!2d80.4080079!3d5.9638354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae1151d9f9a71cf%3A0x49db91a81458b9fe!2sShan%20Star!5e0!3m2!1sen!2slk!4v1751441643653!5m2!1sen!2slk" style={{ border: 0, width: '100%', height: '100%' }} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Shan Star Map"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Bottom Bar */}
+                    <div className={`border-t border-gray-200 py-4 px-4 flex flex-col md:flex-row justify-between items-center text-xs ${iconToggled ? 'text-gray-300 bg-black' : 'text-gray-500 bg-white'}`}>
+                        <div className="mb-2 md:mb-0">Copyright@2025 Lumicore Inc | Design by Lumicore Inc</div>
+                        <div className="flex space-x-3">
+                            <a href="#" className="hover:text-yellow-500">Terms of Use</a>
+                            <span>|</span>
+                            <a href="#" className="hover:text-yellow-500">Privacy & Policy</a>
+                        </div>
+                    </div>
+                </footer>
+            );
+        }
+
+        // Hero Section Component with Responsive Overlay and Carousel
+        function HeroSection() {
+            const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+            const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+
+            const heroImages = [
+                { src: 'assets/packege/4day/Dambulla-Cave-Temple.jpg', alt: 'Sigiriya Rock Fortress' },
+                { src: 'assets/packege/4day/Minneriya-National-park.jpg', alt: 'Minneriya' },
+                { src: 'assets/packege/4day/Sigiriya-Rock.jpg', alt: 'Sigiriya' },
+                { src: 'assets/packege/4day/Kandy.jpg', alt: 'Kandy' },
+                { src: 'assets/packege/4day/Botnical-garden.jpg', alt: 'garden' },
+                { src: 'assets/packege/4day/spice-garden.jpg', alt: 'garden' },
+                { src: 'assets/packege/4day/Sigiriya-Rock.jpg', alt: 'Sigiriya' },
+                { src: 'assets/packege/4day/Nuwara-Eliya.jpg', alt: 'garden' }
+            ];
+
+            // Responsive handler
+            React.useEffect(() => {
+                const handleResize = () => setIsMobile(window.innerWidth < 768);
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
+            // Carousel logic
+            const totalPairs = Math.ceil(heroImages.length / 2);
+            const currentPair = Math.floor(currentImageIndex / 2);
+            const getPairStartIndex = (pairIdx) => pairIdx * 2;
+
+            // For mobile: show one image at a time
+            // For desktop: show two images at a time (pair)
+            const next = () => {
+                if (isMobile) {
+                    setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+                } else {
+                    setCurrentImageIndex((prev) => {
+                        const nextPairIdx = (Math.floor(prev / 2) + 1) % totalPairs;
+                        return getPairStartIndex(nextPairIdx);
+                    });
+                }
+            };
+            const prev = () => {
+                if (isMobile) {
+                    setCurrentImageIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+                } else {
+                    setCurrentImageIndex((prev) => {
+                        const prevPairIdx = (Math.floor(prev / 2) - 1 + totalPairs) % totalPairs;
+                        return getPairStartIndex(prevPairIdx);
+                    });
+                }
+            };
+
+            React.useEffect(() => {
+                const interval = setInterval(() => {
+                    next();
+                }, 5000);
+                return () => clearInterval(interval);
+            }, [isMobile]);
+
+            // Images to show
+            let imagesToShow;
+            if (isMobile) {
+                imagesToShow = [heroImages[currentImageIndex]];
+            } else {
+                const firstIdx = getPairStartIndex(currentPair);
+                const secondIdx = firstIdx + 1;
+                imagesToShow = [heroImages[firstIdx]];
+                if (secondIdx < heroImages.length) imagesToShow.push(heroImages[secondIdx]);
+            }
+
+            // Indicators
+            const indicatorCount = isMobile ? heroImages.length : totalPairs;
+            const activeIndicator = isMobile ? currentImageIndex : currentPair;
+
+            return (
+                <div className="relative w-full h-96 overflow-hidden">
+                    {/* Images Row */}
+                    <div className="absolute inset-0 flex flex-row w-full h-full">
+                        {imagesToShow.map((img, idx) => (
+                            <div key={img.src} className={isMobile ? 'w-full h-full relative' : 'w-1/2 h-full relative'}>
+                                <div
+                                    className="w-full h-full bg-cover bg-center transition-all duration-1000 ease-in-out"
+                                    style={{
+                                        backgroundImage: `linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('${img.src}')`
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Single Overlay for Heading and Subtitle */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 pointer-events-none">
+                        <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center drop-shadow-lg">
+                            Discover Ancient Fortresses, Wildlife Safaris & Tea Plantations
+                        </h2>
+                        <p className="text-lg md:text-xl opacity-90 text-center drop-shadow-lg">03 Nights & 04 Days</p>
+                    </div>
+
+                    {/* Navigation Arrows */}
+                    <button 
+                        onClick={prev}
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-300 z-20"
+                        aria-label="Previous images"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button 
+                        onClick={next}
+                        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-70 text-white p-2 rounded-full transition-all duration-300 z-20"
+                        aria-label="Next images"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    {/* Indicators */}
+                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+                        {Array.from({ length: indicatorCount }).map((_, idx) => (
+                            <button
+                                key={idx}
+                                onClick={() => {
+                                    if (isMobile) setCurrentImageIndex(idx);
+                                    else setCurrentImageIndex(getPairStartIndex(idx));
+                                }}
+                                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                                    idx === activeIndicator 
+                                        ? 'bg-white' 
+                                        : 'bg-white bg-opacity-50 hover:bg-opacity-75'
+                                }`}
+                                aria-label={`Go to ${isMobile ? 'image' : 'image pair'} ${idx + 1}`}
+                            />
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        // WhatsApp Floating Button Component
+        function WhatsAppButton({ iconToggled }) {
+            const handleWhatsAppClick = () => {
+                const phoneNumber = '+94710190304';
+                const message = 'Hello! I would like to know more about your travel packages.';
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, '_blank');
+            };
+
+            return (
+                <div className="fixed bottom-6 right-6 z-50">
+                    <button
+                        onClick={handleWhatsAppClick}
+                        className="w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+                        title="Chat with us on WhatsApp"
+                    >
+                        <svg
+                            className="w-7 h-7"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M20.52 3.48A12.07 12.07 0 0012 0C5.37 0 0 5.37 0 12c0 2.12.55 4.18 1.6 6.01L0 24l6.09-1.59A11.94 11.94 0 0012 24c6.63 0 12-5.37 12-12 0-3.21-1.25-6.23-3.48-8.52zM12 22c-1.85 0-3.68-.5-5.25-1.44l-.37-.22-3.62.95.97-3.52-.24-.37A9.94 9.94 0 012 12c0-5.52 4.48-10 10-10s10 4.48 10 10-4.48 10-10 10zm5.2-7.8c-.28-.14-1.65-.81-1.9-.9-.25-.09-.43-.14-.61.14-.18.28-.7.9-.86 1.08-.16.18-.32.2-.6.07-.28-.14-1.18-.44-2.25-1.4-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.13-.13.28-.34.42-.51.14-.17.18-.29.28-.48.09-.19.05-.36-.02-.5-.07-.14-.61-1.47-.84-2.01-.22-.53-.45-.46-.62-.47-.16-.01-.36-.01-.56-.01-.19 0-.5.07-.76.34-.26.27-1 1-1 2.43 0 1.43 1.03 2.81 1.18 3.01.15.2 2.03 3.1 4.93 4.23.69.3 1.23.48 1.65.61.69.22 1.32.19 1.82.12.56-.08 1.65-.67 1.88-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33z" />
+                        </svg>
+                        {/* Pulse animation */}
+                        <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-20"></div>
+                    </button>
+                </div>
+            );
+        }
+
+        // Main App
+        function App() {
+            const [iconToggled, setIconToggled] = React.useState(false);
+
+            React.useEffect(() => {
+                if (window.AOS) window.AOS.init({ once: true, duration: 900, easing: 'ease-out-cubic' });
+            }, []);
+
+            return (
+                <>
+                    <Navbar iconToggled={iconToggled} setIconToggled={setIconToggled} />
+                    <WhatsAppButton iconToggled={iconToggled} />
+                </>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('navbar-root'));
+    </script>
+
+    <!-- Hero React Root -->
+    <div id="hero-root"></div>
+    <script type="text/babel">
+        // Hero App
+        function HeroApp() {
+            return <HeroSection />;
+        }
+
+        ReactDOM.render(<HeroApp />, document.getElementById('hero-root'));
+        
+    </script>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+                <!-- Header -->
+    <div class="header" data-aos="fade-down">
+        <div class="container">
+            <h1 class="animate-fade-in">4 Days Miniature Tour of Sri Lanka</h1>
+            <p class="animate-fade-in" style="animation-delay:0.2s;">Explore the Best of Sri Lanka in a Short Getaway</p>
+        </div>
+    </div>
+
+            <!-- Tour Highlights -->
+            <div class="section" data-aos="fade-up">
+                <div class="flex flex-col md:flex-row gap-8 items-stretch  items-center justify-center">
+                    <!-- Highlights List -->
+                    <div class="md:w-1/2 mr-20">
+                        <h2><span class="icon">⭐</span>Tour Highlights</h2>
+                        <div class="highlights">
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in">Visit the ancient rock fortress of Sigiriya</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="100">Safari adventure in Minneriya National Park</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="200">Discover the cultural treasures of Kandy</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="300">Scenic train ride through hill country</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="400">Explore the colonial charm of Nuwara Eliya</div>
+                        </div>
+                    </div>
+                    <!-- Image on the right -->
+                    <div class="flex items-center justify-center" data-aos="fade-left">
+                        <img 
+                            src="assets/packege/4day/map.jpg" 
+                            alt="Sigiriya Rock Fortress" 
+                            class="w-full h-full max-h-96 object-contain rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300"
+                            style="min-height: 220px;"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Itinerary -->
+            <div class="section" data-aos="fade-up">
+                <h2><span class="icon">🗓️</span>Itinerary Overview</h2>
+
+                <div class="day-card" data-aos="fade-right">
+                    <div class="day-header">Day 1: Arrival & Sigiriya Rock Fortress</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Airport pickup in Colombo</li>
+                            <li>Travel to Sigiriya (4-hour drive)</li>
+                            <li>Climb the UNESCO-listed Sigiriya Rock Fortress</li>
+                            <li>Evening safari at Minneriya National Park (famous for elephant herds)</li>
+                            <li>Overnight at a Sigiriya hotel</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-aos="fade-left" data-aos-delay="100">
+                    <div class="day-header">Day 2: Kandy Cultural Experience</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Visit Dambulla Cave Temple (golden Buddha statues)</li>
+                            <li>Travel to Kandy (3-hour drive)</li>
+                            <li>Explore Temple of the Sacred Tooth Relic</li>
+                            <li>Cultural dance performance</li>
+                            <li>Overnight in Kandy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-aos="fade-right" data-aos-delay="200">
+                    <div class="day-header">Day 3: Hill Country & Tea Plantations</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Scenic train ride to Nuwara Eliya ("Little England")</li>
+                            <li>Visit tea plantations and factory</li>
+                            <li>Explore Gregory Lake and colonial architecture</li>
+                            <li>Overnight in Nuwara Eliya</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-aos="fade-left" data-aos-delay="300">
+                    <div class="day-header">Day 4: Return to Colombo</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Visit Ramboda Falls en route</li>
+                            <li>Stop at a spice garden</li>
+                            <li>Return to Colombo for departure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package Details -->
+            <div class="section" data-aos="fade-up">
+                <h2><span class="icon">📦</span>Package Details</h2>
+                <div class="package-grid">
+                    <div class="includes" data-aos="zoom-in-right">
+                        <h4>Package Includes</h4>
+                        <ul>
+                            <li>All transportation in AC vehicle</li>
+                            <li>3 nights' accommodation (3-4 star hotels)</li>
+                            <li>Daily breakfast</li>
+                            <li>Entrance fees to all mentioned sites</li>
+                            <li>Safari jeep hire in Minneriya</li>
+                            <li>Train tickets (Kandy to Nuwara Eliya)</li>
+                            <li>English-speaking chauffeur guide</li>
+                        </ul>
+                    </div>
+                    <div class="excludes" data-aos="zoom-in-left">
+                        <h4>Package Excludes</h4>
+                        <ul>
+                            <li>International flights</li>
+                            <li>Lunch & dinner</li>
+                            <li>Personal expenses</li>
+                            <li>Travel insurance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose -->
+            <div class="section" data-aos="fade-up">
+                <h2><span class="icon">🎯</span>Why Choose This Tour?</h2>
+                <div class="tips-grid">
+                    <div class="tip-item" data-aos="flip-left">Perfect introduction to Sri Lanka's diverse attractions</div>
+                    <div class="tip-item" data-aos="flip-left" data-aos-delay="100">Carefully curated to maximize your 4-day experience</div>
+                    <div class="tip-item" data-aos="flip-left" data-aos-delay="200">Comfortable transportation between destinations</div>
+                    <div class="tip-item" data-aos="flip-left" data-aos-delay="300">Authentic cultural encounters</div>
+                    <div class="tip-item" data-aos="flip-left" data-aos-delay="400">Wildlife spotting opportunities</div>
+                </div>
+            </div>
+
+            <!-- Booking -->
+            <div class="section booking" data-aos="zoom-in">
+                <h2><span class="icon">📞</span>Book Now</h2>
+                <div class="contact-info">
+                    <div class="contact-item" data-aos="fade-up"> 
+                        <h4>📞 Phone</h4>
+                        <p>+94 77 123 4567</p>
+                    </div>
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+                        <h4>✉️ Email</h4>
+                        <p>info@beautylankatravels.com</p>
+                    </div>
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+                        <h4>📅 Availability</h4>
+                        <p>Check Availability</p>
+                    </div>
+                </div>
+                <a href="#" class="cta-button transform hover:scale-110 transition-transform duration-300" id="book-tour-btn">Book This Tour</a>
+                <a href="#" class="cta-button transform hover:scale-110 transition-transform duration-300">Request Quote</a>
+            </div>
+
+            <!-- Travel Tips -->
+            <div class="section" data-aos="fade-up">
+                <h2><span class="icon">💡</span>Travel Tips</h2>
+                <div class="tips-grid">
+                    <div class="tip-item" data-aos="fade-right">Best time to visit: January to April</div>
+                    <div class="tip-item" data-aos="fade-right" data-aos-delay="100">Wear comfortable shoes for Sigiriya climb</div>
+                    <div class="tip-item" data-aos="fade-right" data-aos-delay="200">Carry light jackets for Nuwara Eliya's cool climate</div>
+                    <div class="tip-item" data-aos="fade-right" data-aos-delay="300">Sri Lanka requires tourist visa (ETA)</div>
+                </div>
+            </div>
+
+            <!-- Customer Reviews -->
+            <div class="section" data-aos="fade-up">
+                <h2><span class="icon">👥</span>Customer Reviews</h2>
+                <div class="reviews">
+                    <div class="review-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="review-text">"Amazing way to see Sri Lanka's highlights in just 4 days! The Sigiriya
+                            climb was challenging but worth it."</div>
+                        <div class="review-author">- Sarah, UK</div>
+                    </div>
+                    <div class="review-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="review-text">"Our guide made the history come alive. The tea plantation visit was a
+                            highlight!"</div>
+                        <div class="review-author">- Mark & Jenny, Australia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer React Root -->
+    <div id="footer-root"></div>
+    <script type="text/babel">
+        // Footer App
+        function FooterApp() {
+            const [iconToggled, setIconToggled] = React.useState(false);
+
+            React.useEffect(() => {
+                if (window.AOS) window.AOS.init({ once: true, duration: 900, easing: 'ease-out-cubic' });
+            }, []);
+
+            return <Footer iconToggled={iconToggled} />;
+        }
+
+        ReactDOM.render(<FooterApp />, document.getElementById('footer-root'));
+
+        // --- Booking Popup Trigger ---
+        React.useEffect(() => {
+            const btn = document.getElementById('book-tour-btn');
+            if (btn) {
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    localStorage.setItem('openBookingPopup', 'true');
+                    window.location.href = 'index.html';
+                };
+            }
+        }, []);
+    </script>
+
+</body>
+
+</html>
