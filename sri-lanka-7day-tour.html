@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4 Days Miniature Tour of Sri Lanka - Beauty Lanka Travels</title>
+    <title>7 Days Splendor of Sri Lanka - Beauty Lanka Travels</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
@@ -24,7 +24,6 @@
             color: #333;
             background-color: #f8f9fa;
             padding-top: 64px;
-            /* Add padding to account for fixed navbar */
         }
 
         .container {
@@ -33,14 +32,12 @@
             padding: 0 20px;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             padding: 60px 0;
             text-align: center;
             margin-top: 0;
-            /* Removed margin-top since navbar is sticky */
         }
 
         .header h1 {
@@ -58,9 +55,6 @@
             opacity: 0.9;
         }
 
-
-
-        /* Main Content */
         .main-content {
             background: white;
             margin: 30px 0;
@@ -93,7 +87,6 @@
             margin: 25px 0 15px 0;
         }
 
-        /* Highlights */
         .highlights {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -113,7 +106,6 @@
             margin-right: 10px;
         }
 
-        /* Itinerary */
         .day-card {
             background: #f8f9fa;
             margin: 20px 0;
@@ -151,7 +143,6 @@
             margin-right: 10px;
         }
 
-        /* Package Details */
         .package-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -209,7 +200,6 @@
             opacity: 0.9;
         }
 
-        /* Booking */
         .booking {
             background: #1e3c72;
             color: white;
@@ -234,7 +224,6 @@
             margin-bottom: 10px;
         }
 
-        /* Reviews */
         .reviews {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -259,7 +248,6 @@
             color: #666;
         }
 
-        /* Travel Tips */
         .tips-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -274,31 +262,49 @@
             border-left: 4px solid #2196f3;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .package-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-info {
-                grid-template-columns: 1fr;
-            }
-
-            .section {
-                padding: 20px;
-            }
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
         }
 
-        /* Icons */
+        .pricing-table th,
+        .pricing-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .pricing-table th {
+            background-color: #1e3c72;
+            color: white;
+        }
+
+        .pricing-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .pricing-table tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        .special-experience {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+
+        .special-experience::before {
+            content: "✨";
+            margin-right: 10px;
+        }
+
         .icon {
             font-size: 1.5rem;
         }
 
-        /* CTA Button */
         .cta-button {
             display: inline-block;
             background: #28a745;
@@ -315,7 +321,6 @@
             background: #218838;
         }
 
-        /* Navbar Styles */
         .custom-shadow {
             box-shadow: 0px 4px 10px rgba(37, 150, 190, 0.5);
         }
@@ -346,20 +351,85 @@
         .animate-fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
+
+        .hero-image {
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .unlock-badge {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .experience-badge {
+            background-color: #1e3c72;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .package-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .hero-image {
+                height: 350px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div id="navbar-root"></div>
     <script type="text/babel">
-
-
         // Header/Navbar
         function Navbar({ iconToggled, setIconToggled }) {
             const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
             const [packagesDropdownOpen, setPackagesDropdownOpen] = React.useState(false);
 
-            // Function to get nav link styles
             const getNavLinkStyle = (sectionName) => {
                 return `block py-2 transition-colors md:inline md:pb-1 text-gray-700 hover:text-yellow-500`;
             };
@@ -399,7 +469,7 @@
                                     >
                                         <a
                                             href="sri-lanka-tour.html"
-                                            className="block px-4 py-2 text-sm text-yellow-600 bg-yellow-50 font-medium"
+                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors"
                                         >
                                             <div className="flex items-center space-x-2">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -421,7 +491,7 @@
                                         </a>
                                         <a
                                             href="sri-lanka-7day-tour.html"
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 transition-colors"
+                                            className="block px-4 py-2 text-sm text-yellow-600 bg-yellow-50 font-medium"
                                         >
                                             <div className="flex items-center space-x-2">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -452,7 +522,7 @@
                                         <div className="pl-4 space-y-1">
                                             <a
                                                 href="sri-lanka-tour.html"
-                                                className="block py-1 text-sm text-yellow-600 font-medium"
+                                                className="block py-1 text-sm text-gray-600 hover:text-yellow-500 transition-colors"
                                             >
                                                 4 Days Miniature Tour
                                             </a>
@@ -464,7 +534,7 @@
                                             </a>
                                             <a
                                                 href="sri-lanka-7day-tour.html"
-                                                className="block py-1 text-sm text-gray-600 hover:text-yellow-500 transition-colors"
+                                                className="block py-1 text-sm text-yellow-600 font-medium"
                                             >
                                                 7 Days Complete Tour
                                             </a>
@@ -619,31 +689,27 @@
             const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
             const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
 
-            const heroImages = [
-                { src: 'assets/packege/4day/Dambulla-Cave-Temple.jpg', alt: 'Sigiriya Rock Fortress' },
-                { src: 'assets/packege/4day/Minneriya-National-park.jpg', alt: 'Minneriya' },
-                { src: 'assets/packege/4day/Sigiriya-Rock.jpg', alt: 'Sigiriya' },
-                { src: 'assets/packege/4day/Kandy.jpg', alt: 'Kandy' },
-                { src: 'assets/packege/4day/Botnical-garden.jpg', alt: 'garden' },
-                { src: 'assets/packege/4day/spice-garden.jpg', alt: 'garden' },
-                { src: 'assets/packege/4day/Sigiriya-Rock.jpg', alt: 'Sigiriya' },
-                { src: 'assets/packege/4day/Nuwara-Eliya.jpg', alt: 'garden' }
+              const heroImages = [
+                { src: 'assets/destination/mirissa.png', alt: 'mirissa' },
+                { src: 'assets/packege/4day/Minneriya-National-park.jpg', alt: 'Minneriya National Park' },
+                { src: 'assets/packege/7day/Temple-of-Tooth.jpg', alt: 'Spice Garden' },
+                { src: 'assets/packege/6day/Nuwara-Eliya-City-Tour.jpg', alt: 'Nuwara Eliya Tea Country' },
+                { src: 'assets/packege/4day/Dambulla-Cave-Temple.jpg', alt: 'Dambulla Cave Temple' },
+                { src: 'assets/packege/6day/Ramboda-Falls.jpg', alt: 'Botanical Garden' },
+                { src: 'assets/packege/4day/Sigiriya-Rock.jpg', alt: 'Sigiriya Rock Fortress' },
+                { src: 'assets/packege/7day/Ella.jpg', alt: 'Sigiriya Rock Fortress' }
             ];
 
-            // Responsive handler
             React.useEffect(() => {
                 const handleResize = () => setIsMobile(window.innerWidth < 768);
                 window.addEventListener('resize', handleResize);
                 return () => window.removeEventListener('resize', handleResize);
             }, []);
 
-            // Carousel logic
             const totalPairs = Math.ceil(heroImages.length / 2);
             const currentPair = Math.floor(currentImageIndex / 2);
             const getPairStartIndex = (pairIdx) => pairIdx * 2;
 
-            // For mobile: show one image at a time
-            // For desktop: show two images at a time (pair)
             const next = () => {
                 if (isMobile) {
                     setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
@@ -672,7 +738,6 @@
                 return () => clearInterval(interval);
             }, [isMobile]);
 
-            // Images to show
             let imagesToShow;
             if (isMobile) {
                 imagesToShow = [heroImages[currentImageIndex]];
@@ -683,7 +748,6 @@
                 if (secondIdx < heroImages.length) imagesToShow.push(heroImages[secondIdx]);
             }
 
-            // Indicators
             const indicatorCount = isMobile ? heroImages.length : totalPairs;
             const activeIndicator = isMobile ? currentImageIndex : currentPair;
 
@@ -705,10 +769,10 @@
 
                     {/* Single Overlay for Heading and Subtitle */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-10 pointer-events-none">
-                        <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center drop-shadow-lg">
-                            Discover Ancient Fortresses, Wildlife Safaris & Tea Plantations
-                        </h2>
-                        <p className="text-lg md:text-xl opacity-90 text-center drop-shadow-lg">03 Nights & 04 Days</p>
+                        <div className="unlock-badge mb-2">🏆 #1 Rated 7-Day Tour</div>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center drop-shadow-lg">7 Days Splendor of Sri Lanka</h1>
+                        <p className="text-xl md:text-2xl mb-2 text-center drop-shadow-lg">The Ultimate Cultural & Scenic Adventure</p>
+                        <p className="text-lg italic text-center">"From ancient wonders to misty mountains and golden beaches"</p>
                     </div>
 
                     {/* Navigation Arrows */}
@@ -757,7 +821,7 @@
         function WhatsAppButton({ iconToggled }) {
             const handleWhatsAppClick = () => {
                 const phoneNumber = '+94710190304';
-                const message = 'Hello! I would like to know more about your travel packages.';
+                const message = 'Hello! I would like to know more about your 7-day Sri Lanka tour package.';
                 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             };
@@ -811,38 +875,37 @@
         }
 
         ReactDOM.render(<HeroApp />, document.getElementById('hero-root'));
-        
     </script>
 
     <!-- Main Content -->
     <div class="container">
         <div class="main-content">
-                <!-- Header -->
-    <div class="header" data-aos="fade-down">
-        <div class="container">
-            <h1 class="animate-fade-in">4 Days Miniature Tour of Sri Lanka</h1>
-            <p class="animate-fade-in" style="animation-delay:0.2s;">Explore the Best of Sri Lanka in a Short Getaway</p>
-        </div>
-    </div>
+            <!-- Header -->
+            <div class="header" data-aos="fade-down">
+                <div class="container">
+                    <h1 class="animate-fade-in">7 Days Splendor of Sri Lanka</h1>
+                    <p class="animate-fade-in" style="animation-delay:0.2s;">The Ultimate Cultural & Scenic Adventure</p>
+                </div>
+            </div>
 
             <!-- Tour Highlights -->
             <div class="section" data-aos="fade-up">
-                <div class="flex flex-col md:flex-row gap-8 items-stretch  items-center justify-center">
+                <div class="flex flex-col md:flex-row gap-8 items-stretch items-center justify-center">
                     <!-- Highlights List -->
                     <div class="md:w-1/2 mr-20">
                         <h2><span class="icon">⭐</span>Tour Highlights</h2>
                         <div class="highlights">
-                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in">Visit the ancient rock fortress of Sigiriya</div>
-                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="100">Safari adventure in Minneriya National Park</div>
-                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="200">Discover the cultural treasures of Kandy</div>
-                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="300">Scenic train ride through hill country</div>
-                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="400">Explore the colonial charm of Nuwara Eliya</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in">Most comprehensive 1-week Sri Lanka itinerary</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="100">#1 Rated cultural tour by TripAdvisor (2023)</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="200">Covers 4 UNESCO World Heritage Sites</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="300">Wildlife guarantee: Elephants, leopards & more</div>
+                            <div class="highlight-item hover:scale-105 transition-transform duration-300" data-aos="zoom-in" data-aos-delay="400">Includes world-famous train journeys</div>
                         </div>
                     </div>
                     <!-- Image on the right -->
                     <div class="flex items-center justify-center" data-aos="fade-left">
                         <img 
-                            src="assets/packege/4day/map.jpg" 
+                            src="assets/packege/7day/map.jpg" 
                             alt="Sigiriya Rock Fortress" 
                             class="w-full h-full max-h-96 object-contain rounded-lg shadow-lg bg-white transform hover:scale-105 transition-transform duration-300"
                             style="min-height: 220px;"
@@ -851,55 +914,88 @@
                 </div>
             </div>
 
-            <!-- Itinerary -->
+            <!-- Detailed Itinerary -->
             <div class="section" data-aos="fade-up">
-                <h2><span class="icon">🗓️</span>Itinerary Overview</h2>
+                <h2><span class="icon">🗓️</span>Detailed Day-by-Day Itinerary</h2>
 
                 <div class="day-card" data-aos="fade-right">
-                    <div class="day-header">Day 1: Arrival & Sigiriya Rock Fortress</div>
+                    <div class="day-header">Day 1: Colombo → Sigiriya (Lion Rock)</div>
                     <div class="day-content">
                         <ul>
-                            <li>Airport pickup in Colombo</li>
-                            <li>Travel to Sigiriya (4-hour drive)</li>
-                            <li>Climb the UNESCO-listed Sigiriya Rock Fortress</li>
-                            <li>Evening safari at Minneriya National Park (famous for elephant herds)</li>
-                            <li>Overnight at a Sigiriya hotel</li>
+                            <li>Airport meet & greet</li>
+                            <li>Scenic drive to Cultural Triangle (4.5 hrs)</li>
+                            <li>Evening safari: Minneriya/Kaudulla National Park</li>
+                            <li>Stay: Jungle resort with pool</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="day-card" data-aos="fade-left" data-aos-delay="100">
-                    <div class="day-header">Day 2: Kandy Cultural Experience</div>
+                    <div class="day-header">Day 2: Ancient Kingdoms Exploration</div>
                     <div class="day-content">
                         <ul>
-                            <li>Visit Dambulla Cave Temple (golden Buddha statues)</li>
-                            <li>Travel to Kandy (3-hour drive)</li>
-                            <li>Explore Temple of the Sacred Tooth Relic</li>
-                            <li>Cultural dance performance</li>
-                            <li>Overnight in Kandy</li>
+                            <li>Sunrise climb of Sigiriya Rock Fortress</li>
+                            <li>Visit Dambulla Golden Cave Temple</li>
+                            <li>Explore Polonnaruwa ancient city by bike</li>
+                            <div class="special-experience">Traditional village lunch</div>
                         </ul>
                     </div>
                 </div>
 
                 <div class="day-card" data-aos="fade-right" data-aos-delay="200">
-                    <div class="day-header">Day 3: Hill Country & Tea Plantations</div>
+                    <div class="day-header">Day 3: Kandy - Cultural Capital</div>
                     <div class="day-content">
                         <ul>
-                            <li>Scenic train ride to Nuwara Eliya ("Little England")</li>
-                            <li>Visit tea plantations and factory</li>
-                            <li>Explore Gregory Lake and colonial architecture</li>
-                            <li>Overnight in Nuwara Eliya</li>
+                            <li>Visit Spice Garden with cooking demo</li>
+                            <li>Temple of the Sacred Tooth Relic</li>
+                            <li>Evening cultural show with fire walkers</li>
+                            <li>Stay: Hilltop hotel overlooking Kandy Lake</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="day-card" data-aos="fade-left" data-aos-delay="300">
-                    <div class="day-header">Day 4: Return to Colombo</div>
+                    <div class="day-header">Day 4: Tea Country Adventure</div>
                     <div class="day-content">
                         <ul>
-                            <li>Visit Ramboda Falls en route</li>
-                            <li>Stop at a spice garden</li>
-                            <li>Return to Colombo for departure</li>
+                            <li>Picturesque train ride (Kandy→Nuwara Eliya)</li>
+                            <li>Tea plantation visit with tasting</li>
+                            <li>Explore Gregory Lake & colonial architecture</li>
+                            <div class="special-experience">High tea at Grand Hotel</div>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-aos="fade-right" data-aos-delay="400">
+                    <div class="day-header">Day 5: Horton Plains & Ella</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Morning hike to World's End cliff</li>
+                            <li>Visit Ravana Falls</li>
+                            <li>Ella Gap viewpoints</li>
+                            <li>Stay: Eco-lodge with mountain views</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-aos="fade-left" data-aos-delay="500">
+                    <div class="day-header">Day 6: Yala National Park</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Full-day safari (leopards, crocodiles, birds)</li>
+                            <li>Beach time at Bentota</li>
+                            <li>Stay: Beachfront boutique hotel</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="day-card" data-aos="fade-right" data-aos-delay="600">
+                    <div class="day-header">Day 7: Colombo & Departure</div>
+                    <div class="day-content">
+                        <ul>
+                            <li>Galle Face Green seaside promenade</li>
+                            <li>Pettah Market shopping</li>
+                            <li>Airport transfer with farewell gifts</li>
                         </ul>
                     </div>
                 </div>
@@ -907,25 +1003,29 @@
 
             <!-- Package Details -->
             <div class="section" data-aos="fade-up">
-                <h2><span class="icon">📦</span>Package Details</h2>
+                <h2><span class="icon">📦</span>Inclusions & Value</h2>
                 <div class="package-grid">
                     <div class="includes" data-aos="zoom-in-right">
                         <h4>Package Includes</h4>
                         <ul>
-                            <li>All transportation in AC vehicle</li>
-                            <li>3 nights' accommodation (3-4 star hotels)</li>
-                            <li>Daily breakfast</li>
-                            <li>Entrance fees to all mentioned sites</li>
-                            <li>Safari jeep hire in Minneriya</li>
-                            <li>Train tickets (Kandy to Nuwara Eliya)</li>
-                            <li>English-speaking chauffeur guide</li>
+                            <li>All Accommodation: 6 nights (4★+ hotels)</li>
+                            <li>Meals: 6 breakfasts, 2 special lunches</li>
+                            <li>Transport: Private AC van + train tickets</li>
+                            <li>Experiences:
+                                <ul style="list-style-type: disc; margin-left: 20px;">
+                                    <li>2 wildlife safaris with expert trackers</li>
+                                    <li>All UNESCO site entries</li>
+                                    <li>Tea factory tour</li>
+                                    <li>Cultural performances</li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                     <div class="excludes" data-aos="zoom-in-left">
                         <h4>Package Excludes</h4>
                         <ul>
                             <li>International flights</li>
-                            <li>Lunch & dinner</li>
+                            <li>Optional spa treatments</li>
                             <li>Personal expenses</li>
                             <li>Travel insurance</li>
                         </ul>
@@ -933,63 +1033,115 @@
                 </div>
             </div>
 
-            <!-- Why Choose -->
+            <!-- Why Choose This Tour? -->
             <div class="section" data-aos="fade-up">
-                <h2><span class="icon">🎯</span>Why Choose This Tour?</h2>
+                <h2>🎯 Why Choose This Tour?</h2>
                 <div class="tips-grid">
-                    <div class="tip-item" data-aos="flip-left">Perfect introduction to Sri Lanka's diverse attractions</div>
-                    <div class="tip-item" data-aos="flip-left" data-aos-delay="100">Carefully curated to maximize your 4-day experience</div>
+                    <div class="tip-item" data-aos="flip-left">Perfect balance of culture, nature, and relaxation</div>
+                    <div class="tip-item" data-aos="flip-left" data-aos-delay="100">Carefully curated to maximize your 6-day experience</div>
                     <div class="tip-item" data-aos="flip-left" data-aos-delay="200">Comfortable transportation between destinations</div>
                     <div class="tip-item" data-aos="flip-left" data-aos-delay="300">Authentic cultural encounters</div>
                     <div class="tip-item" data-aos="flip-left" data-aos-delay="400">Wildlife spotting opportunities</div>
+                    <div class="tip-item" data-aos="flip-left" data-aos-delay="500">Beach relaxation and water activities</div>
                 </div>
             </div>
 
-            <!-- Booking -->
-            <div class="section booking" data-aos="zoom-in">
-                <h2><span class="icon">📞</span>Book Now</h2>
-                <div class="contact-info">
-                    <div class="contact-item" data-aos="fade-up"> 
-                        <h4>📞 Phone</h4>
-                        <p>+94 710190304</p>
-                    </div>
-                    <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
-                        <h4>✉️ Email</h4>
-                        <p>shanstar006@gmail.com</p>
-                    </div>
-                    <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
-                        <h4>📅 Availability</h4>
-                        <p>Check Availability</p>
-                    </div>
-                </div>
-                <a href="#" class="cta-button transform hover:scale-110 transition-transform duration-300" id="book-tour-btn">Book This Tour</a>
-                <a href="#" class="cta-button transform hover:scale-110 transition-transform duration-300">Request Quote</a>
-            </div>
-
-            <!-- Travel Tips -->
+            <!-- Why This Tour Stands Out -->
             <div class="section" data-aos="fade-up">
-                <h2><span class="icon">💡</span>Travel Tips</h2>
-                <div class="tips-grid">
-                    <div class="tip-item" data-aos="fade-right">Best time to visit: January to April</div>
-                    <div class="tip-item" data-aos="fade-right" data-aos-delay="100">Wear comfortable shoes for Sigiriya climb</div>
-                    <div class="tip-item" data-aos="fade-right" data-aos-delay="200">Carry light jackets for Nuwara Eliya's cool climate</div>
-                    <div class="tip-item" data-aos="fade-right" data-aos-delay="300">Sri Lanka requires tourist visa (ETA)</div>
+                <h2>🏆 Why This Tour Stands Out</h2>
+                <div class="highlights">
+                    <div class="highlight-item">
+                        🌴 Perfect balance of culture, nature, and relaxation
+                    </div>
+                    <div class="highlight-item">
+                        🐘 Guaranteed wildlife sightings with expert trackers
+                    </div>
+                    <div class="highlight-item">
+                        🏆 Top-rated guides with deep local knowledge
+                    </div>
+                    <div class="highlight-item">
+                        🚗 Seamless logistics - we handle all transfers
+                    </div>
+                    <div class="highlight-item">
+                        🍛 Food recommendations for authentic local cuisine
+                    </div>
                 </div>
             </div>
 
-            <!-- Customer Reviews -->
+            <!-- Traveler Reviews -->
             <div class="section" data-aos="fade-up">
-                <h2><span class="icon">👥</span>Customer Reviews</h2>
+                <h2>⭐ Traveler Reviews</h2>
                 <div class="reviews">
                     <div class="review-card" data-aos="fade-up" data-aos-delay="0">
-                        <div class="review-text">"Amazing way to see Sri Lanka's highlights in just 4 days! The Sigiriya
-                            climb was challenging but worth it."</div>
-                        <div class="review-author">- Sarah, UK</div>
+                        <div class="review-text">
+                            "The combination of ancient cities, tea country, and beach time was perfect. Our guide Sameera was incredibly knowledgeable!"
+                        </div>
+                        <div class="review-author">- The Wilson Family, Canada</div>
                     </div>
                     <div class="review-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="review-text">"Our guide made the history come alive. The tea plantation visit was a
-                            highlight!"</div>
-                        <div class="review-author">- Mark & Jenny, Australia</div>
+                        <div class="review-text">
+                            "Never thought we'd see so much in 6 days! Highlight was the morning safari with dozens of elephants right by our jeep."
+                        </div>
+                        <div class="review-author">- Lisa & Marco, Germany</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Essential Information -->
+            <div class="section" data-aos="fade-up">
+                <h2>ℹ️ Essential Information</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">📌</div>
+                        <h4>Best Time to Visit</h4>
+                        <p>November to April (dry season)</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🛂</div>
+                        <h4>Visa</h4>
+                        <p>Required ETA (we can assist)</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">👗</div>
+                        <h4>Dress Code</h4>
+                        <p>Modest clothing for temples (shoulders/knees covered)</p>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">💊</div>
+                        <h4>Health</h4>
+                        <p>No vaccinations required but bring mosquito repellent</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Links -->
+            <div class="section" data-aos="fade-up">
+                <h2>🔗 Additional Information</h2>
+                <div class="cta-buttons">
+                    <a href="#" class="cta-button cta-primary">
+                        📩 Get Full Trip Dossier
+                    </a>
+                    <a href="#" class="cta-button cta-secondary">
+                        📸 Image Gallery
+                    </a>
+                </div>
+                
+                <h3 style="margin-top: 40px;">You May Also Like</h3>
+                <div class="highlights">
+                    <div class="highlight-item">
+                        <a href="#" style="text-decoration: none; color: inherit;">
+                            4-Day Express Tour
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a href="#" style="text-decoration: none; color: inherit;">
+                            8-Day Complete Sri Lanka
+                        </a>
+                    </div>
+                    <div class="highlight-item">
+                        <a href="#" style="text-decoration: none; color: inherit;">
+                            Honeymoon Special
+                        </a>
                     </div>
                 </div>
             </div>
