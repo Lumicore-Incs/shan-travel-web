@@ -82,15 +82,19 @@
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 0.6;
             }
+
             50% {
                 opacity: 1;
             }
@@ -628,7 +632,7 @@
                                 {/* Mobile Day Tours Menu */}
                                 <div className="md:hidden">
                                     <div className="py-2">
-                                         <a href="/day-tours/day-tours.html" className="text-gray-700 font-medium mb-2">Day Tours</a>
+                                        <a href="/day-tours/day-tours.html" className="text-gray-700 font-medium mb-2">Day Tours</a>
                                     </div>
                                 </div>
 
@@ -1220,31 +1224,29 @@
                 </div>
             </div>
 
-            <!-- Essential Information -->
-            <div class="section" data-aos="fade-up">
-                <h2>ℹ️ Essential Information</h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-icon">📌</div>
-                        <h4>Best Time to Visit</h4>
-                        <p>November to April (dry season)</p>
+
+            <!-- Booking -->
+            <div class="section booking" data-aos="zoom-in">
+                <h2><span class="icon">📞</span>Book Now</h2>
+                <div class="contact-info">
+                    <div class="contact-item" data-aos="fade-up">
+                        <h4>📞 Phone</h4>
+                        <p>+94 710190304</p>
                     </div>
-                    <div class="info-item">
-                        <div class="info-icon">🛂</div>
-                        <h4>Visa</h4>
-                        <p>Required ETA (we can assist)</p>
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
+                        <h4>✉️ Email</h4>
+                        <p>shanstar006@gmail.com</p>
                     </div>
-                    <div class="info-item">
-                        <div class="info-icon">👗</div>
-                        <h4>Dress Code</h4>
-                        <p>Modest clothing for temples (shoulders/knees covered)</p>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon">💊</div>
-                        <h4>Health</h4>
-                        <p>No vaccinations required but bring mosquito repellent</p>
+                    <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
+                        <h4>📅 Availability</h4>
+                        <p>Check Availability</p>
                     </div>
                 </div>
+                <a href="#" class="cta-button transform hover:scale-110 transition-transform duration-300"
+                    id="book-tour-btn">Book
+                    This Tour</a>
+                <a href="#" class="cta-button transform hover:scale-110 transition-transform duration-300">Request
+                    Quote</a>
             </div>
 
             <!-- Additional Links -->
@@ -1324,16 +1326,16 @@
         }
 
         // Wait for everything to load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             // Additional slight delay for better UX
             setTimeout(hideLoader, 500);
         });
 
         // Initialize AOS animations
         if (window.AOS) {
-            window.AOS.init({ 
-                once: true, 
-                duration: 900, 
+            window.AOS.init({
+                once: true,
+                duration: 900,
                 easing: 'ease-out-cubic',
                 offset: 120
             });

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shan Travels - Admin Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #2563EB;
+      --secondary: #F59E0B;
+      --dark: #1F2937;
+      --darker: #111827;
+    }
+
+    .sidebar {
+      transition: all 0.3s ease;
+      width: 280px;
+    }
+
+    .sidebar-collapsed {
+      width: 80px;
+    }
+
+    .sidebar-collapsed .nav-text {
+      display: none;
+    }
+
+    .sidebar-collapsed .logo-text {
+      display: none;
+    }
+
+    .sidebar-collapsed .menu-toggle i:before {
+      content: "\f061";
+    }
+
+    .nav-item.active {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--primary);
+    }
+
+    .nav-item:hover:not(.active) {
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar {
+        position: fixed;
+        z-index: 50;
+        transform: translateX(-100%);
+      }
+
+      .sidebar-mobile-show {
+        transform: translateX(0);
+      }
+
+      .content-area {
+        margin-left: 0;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+      }
+
+      .overlay-show {
+        display: block;
+      }
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      border-radius: 0.5rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-show {
+      display: flex;
+    }
+
+    /* Toggle switch styles */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 35px;
+      height: 20px;
+      margin-left: 5px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 15px;
+      width: 15px;
+      left: 4px;
+      top: 2px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #3B82F6;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(15px);
+    }
+
+    .toggle-label {
+      margin-left: 10px;
+      font-weight: 400;
+    }
+
+    .toggle-label.active {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .loading-spinner {
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top: 3px solid #3B82F6;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- Main Content -->
+    <div class="content-area flex-1 flex flex-col overflow-hidden">
+      <!-- Top Navigation -->
+      <header class="bg-white shadow-sm z-10">
+        <div class="flex items-center justify-between px-6 py-3">
+          <div class="flex items-center space-x-4">
+            <h1 class="text-xl font-semibold">Dashboard</h1>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <div class="relative">
+              <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                <i class="fas fa-bell"></i>
+                <span class="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500"></span>
+              </button>
+            </div>
+            <div class="border-l border-gray-200 pl-4">
+              <div class="flex items-center space-x-2">
+                <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                  <i class="fas fa-user text-blue-500"></i>
+                </div>
+                <span class="hidden md:inline">Admin User</span>
+                <button id="logoutBtn" class="text-gray-500 hover:text-red-500">
+                  <i class="fas fa-sign-out-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+        <!-- Stats Cards -->
+        <div class="dashboard-grid mb-6">
+          <div class="stat-card bg-white rounded-lg shadow p-6 transition-all duration-300">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-500">Total Bookings</p>
+                <p class="text-2xl font-bold" id="totalBookings">0</p>
+              </div>
+              <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                <i class="fas fa-book text-blue-500 text-xl"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up"></i> 12.5%</span>
+              <span class="text-gray-500 text-sm ml-2">vs last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card bg-white rounded-lg shadow p-6 transition-all duration-300">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-500">Today's Bookings</p>
+                <p class="text-2xl font-bold" id="todayBookings">0</p>
+              </div>
+              <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
+                <i class="fas fa-calendar-day text-green-500 text-xl"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up"></i> 8.3%</span>
+              <span class="text-gray-500 text-sm ml-2">vs yesterday</span>
+            </div>
+          </div>
+
+          <div class="stat-card bg-white rounded-lg shadow p-6 transition-all duration-300">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-500">Total Customers</p>
+                <p class="text-2xl font-bold" id="totalCustomers">0</p>
+              </div>
+              <div class="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
+                <i class="fas fa-users text-purple-500 text-xl"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up"></i> 5.7%</span>
+              <span class="text-gray-500 text-sm ml-2">vs last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card bg-white rounded-lg shadow p-6 transition-all duration-300">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-gray-500">Today's Customers</p>
+                <p class="text-2xl font-bold" id="todayCustomers">0</p>
+              </div>
+              <div class="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                <i class="fas fa-user-plus text-yellow-500 text-xl"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <span class="text-green-500 text-sm font-medium"><i class="fas fa-arrow-up"></i> 3.2%</span>
+              <span class="text-gray-500 text-sm ml-2">vs yesterday</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Bookings -->
+        <div class="bg-white rounded-lg shadow mb-6">
+          <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+            <h2 class="text-lg font-semibold">Recent Bookings</h2>
+            <div class="flex items-center">
+              <span class="toggle-label active" id="todayLabel">Today's Bookings</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="bookingToggle">
+                <span class="toggle-slider"></span>
+              </label>
+              <span class="toggle-label" id="allLabel">All Bookings</span>
+            </div>
+          </div>
+          <div class="p-4">
+            <div class="table-responsive">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pickup Location</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Drop Location</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="bookingsTableBody">
+                  <tr>
+                    <td colspan="7" class="px-6 py-4 text-center">
+                      <div class="loading-spinner"></div>
+                      <span class="ml-2">Loading bookings...</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Booking Details Modal -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <div class="p-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold">Booking Details</h2>
+        <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" id="closeModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="bookingDetails">
+          <!-- Booking details will be inserted here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check authentication
+      const authToken = localStorage.getItem('authToken');
+      console.log('Auth Token:', authToken);
+      if (!authToken) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      // API endpoint
+      const API_URL = 'https://back.travelshanstar.com/api/bookings';
+      let bookings = [];
+      
+      // Logout functionality
+      document.getElementById('logoutBtn').addEventListener('click', function() {
+        localStorage.removeItem('authToken');
+        window.location.href = 'login.html';
+      });
+
+      // Fetch bookings from API with authentication
+      async function fetchBookings() {
+        try {
+          const response = await fetch(API_URL, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (response.status === 401) {
+            // Token expired or invalid
+            localStorage.removeItem('authToken');
+            window.location.href = 'login.html';
+            return [];
+          }
+
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+
+          const data = await response.json();
+          
+          if (data.success && data.data) {
+            return data.data.map(booking => ({
+              id: booking.id,
+              name: booking.name,
+              pickup_location: booking.pickup_location,
+              drop_location: booking.drop_location,
+              start_date: formatDate(booking.start_date),
+              end_date: formatDate(booking.end_date),
+              status: "Confirmed", // Default status since API doesn't provide
+              contact: booking.contact,
+              email: booking.email,
+              number_of_persons: booking.number_of_persons,
+              notes: booking.notes || "No special requests",
+              booking_date: formatDate(booking.booking_date)
+            }));
+          }
+          return [];
+        } catch (error) {
+          console.error('Error fetching bookings:', error);
+          showError('Failed to load bookings. Please try again later.');
+          return [];
+        }
+      }
+
+      // Format date from API to YYYY-MM-DD
+      function formatDate(dateString) {
+        if (!dateString) return '';
+        return dateString.split('T')[0];
+      }
+
+      // Show error message
+      function showError(message) {
+        const tableBody = document.getElementById('bookingsTableBody');
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="px-6 py-4 text-center text-sm text-red-500">
+              ${message}
+            </td>
+          </tr>
+        `;
+      }
+
+      // Initialize dashboard
+      async function initDashboard() {
+        bookings = await fetchBookings();
+        const today = new Date().toISOString().split('T')[0];
+
+        // Calculate stats
+        const totalBookings = bookings.length;
+        const todayBookings = bookings.filter(booking => booking.booking_date === today).length;
+        const totalCustomers = totalBookings;
+        const todayCustomers = todayBookings;
+
+        // Update stats cards
+        document.getElementById('totalBookings').textContent = totalBookings;
+        document.getElementById('todayBookings').textContent = todayBookings;
+        document.getElementById('totalCustomers').textContent = totalCustomers;
+        document.getElementById('todayCustomers').textContent = todayCustomers;
+
+        // Render bookings
+        renderBookings(true);
+
+        // Toggle switch functionality
+        const bookingToggle = document.getElementById('bookingToggle');
+        bookingToggle.addEventListener('change', function() {
+          renderBookings(!this.checked);
+          
+          // Update label states
+          const todayLabel = document.getElementById('todayLabel');
+          const allLabel = document.getElementById('allLabel');
+          if (this.checked) {
+            todayLabel.classList.remove('active');
+            allLabel.classList.add('active');
+          } else {
+            todayLabel.classList.add('active');
+            allLabel.classList.remove('active');
+          }
+        });
+
+        // Initialize label states
+        const todayLabel = document.getElementById('todayLabel');
+        const allLabel = document.getElementById('allLabel');
+        todayLabel.classList.add('active');
+        allLabel.classList.remove('active');
+      }
+
+      // Function to render bookings
+      function renderBookings(filterToday = true) {
+        const tableBody = document.getElementById('bookingsTableBody');
+        tableBody.innerHTML = ''; // Clear existing rows
+        
+        const today = new Date().toISOString().split('T')[0];
+        const filteredBookings = filterToday 
+          ? bookings.filter(booking => booking.booking_date === today)
+          : bookings;
+
+        if (filteredBookings.length === 0) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">
+              No ${filterToday ? "today's" : ""} bookings found
+            </td>
+          `;
+          tableBody.appendChild(row);
+        } else {
+          filteredBookings.forEach(booking => {
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#${booking.id}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking.name}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking.contact}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking.pickup_location}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking.drop_location}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${booking.start_date} to ${booking.end_date}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <button class="view-details text-blue-500 hover:text-blue-700" data-id="${booking.id}">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        }
+      }
+
+      // Modal functionality
+      const modal = document.getElementById('bookingModal');
+      const closeModal = document.getElementById('closeModal');
+      const bookingDetails = document.getElementById('bookingDetails');
+
+      // Close modal when clicking X or outside
+      closeModal.addEventListener('click', () => {
+        modal.classList.remove('modal-show');
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('modal-show');
+        }
+      });
+
+      // View details button click
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('.view-details')) {
+          const bookingId = parseInt(e.target.closest('.view-details').getAttribute('data-id'));
+          const booking = bookings.find(b => b.id === bookingId);
+          
+          if (booking) {
+            // Populate modal with booking details
+            bookingDetails.innerHTML = `
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Customer Name</p>
+                <p class="text-base">${booking.name}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Contact Number</p>
+                <p class="text-base">${booking.contact}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Email</p>
+                <p class="text-base">${booking.email}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Number of Persons</p>
+                <p class="text-base">${booking.number_of_persons}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Pickup Location</p>
+                <p class="text-base">${booking.pickup_location}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Drop Location</p>
+                <p class="text-base">${booking.drop_location}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Start Date</p>
+                <p class="text-base">${booking.start_date}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">End Date</p>
+                <p class="text-base">${booking.end_date}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Booking Date</p>
+                <p class="text-base">${booking.booking_date}</p>
+              </div>
+              <div class="col-span-2 md:col-span-1">
+                <p class="text-sm font-medium text-gray-500">Status</p>
+                <p class="text-base">${booking.status}</p>
+              </div>
+              <div class="col-span-2">
+                <p class="text-sm font-medium text-gray-500">Special Notes</p>
+                <p class="text-base">${booking.notes}</p>
+              </div>
+            `;
+            
+            // Show modal
+            modal.classList.add('modal-show');
+          }
+        }
+      });
+
+      // Initialize the dashboard
+      initDashboard();
+    });
+  </script>
+</body>
+</html>

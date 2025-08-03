@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shan Travels - Admin Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3B82F6;
+      --primary-dark: #2563EB;
+      --secondary: #F59E0B;
+    }
+    
+    .login-bg {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
+    }
+    
+    .login-card {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .login-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    .login-btn {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      transition: all 0.3s ease;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+    
+    .login-btn:active {
+      transform: translateY(0);
+    }
+    
+    .input-error {
+      border-color: #EF4444;
+    }
+    
+    .error-message {
+      color: #EF4444;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body class="login-bg min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <!-- Login Card -->
+    <div class="login-card bg-white">
+      <!-- Card Header -->
+      <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-center">
+        <div class="flex justify-center mb-4">
+          <img src="./../assets/logo.png" alt="Shan Travels Logo" class="h-16">
+        </div>
+        <h1 class="text-2xl font-bold text-white">Admin Portal</h1>
+        <p class="text-blue-100 mt-1">Sign in to your account</p>
+      </div>
+      
+      <!-- Card Body -->
+      <div class="p-6">
+        <form id="loginForm">
+          <!-- Email Field -->
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700 text-sm font-medium mb-2">
+              <i class="fas fa-envelope mr-2"></i>Email
+            </label>
+            <div class="relative">
+              <input 
+                type="email" 
+                id="email" 
+                name="email"
+                class="login-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none transition duration-300"
+                placeholder="Enter your email"
+              >
+              <div id="emailError" class="error-message"></div>
+            </div>
+          </div>
+          
+          <!-- Password Field -->
+          <div class="mb-6">
+            <label for="password" class="block text-gray-700 text-sm font-medium mb-2">
+              <i class="fas fa-lock mr-2"></i>Password
+            </label>
+            </label>
+            <div class="relative">
+              <input 
+                type="password" 
+                id="password" 
+                name="password"
+                class="login-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none transition duration-300"
+                placeholder="Enter your password"
+              >
+              <button type="button" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600" id="togglePassword">
+                <i class="fas fa-eye"></i>
+              </button>
+              <div id="passwordError" class="error-message"></div>
+            </div>
+          </div>
+          
+          <!-- Remember & Forgot -->
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center">
+              <input 
+                type="checkbox" 
+                id="remember" 
+                name="remember"
+                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                checked
+              >
+              <label for="remember" class="ml-2 block text-sm text-gray-700">
+                Remember me
+              </label>
+            </div>
+            <div>
+              <a href="#" class="text-sm text-blue-600 hover:text-blue-800">
+                Forgot password?
+              </a>
+            </div>
+          </div>
+          
+          <!-- Submit Button -->
+          <button 
+            type="submit"
+            class="login-btn w-full py-3 px-4 text-white font-medium rounded-lg shadow-md"
+          >
+            <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+          </button>
+        </form>
+      </div>
+      
+      <!-- Card Footer -->
+      <div class="bg-gray-50 px-6 py-4 text-center border-t border-gray-200">
+        <p class="text-sm text-gray-600">
+          © 2023 Shan Travels. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const togglePassword = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      
+      // Toggle password visibility
+      togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
+      });
+      
+      // Form validation and submission
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Reset errors
+        document.getElementById('emailError').textContent = '';
+        document.getElementById('passwordError').textContent = '';
+        document.getElementById('email').classList.remove('input-error');
+        document.getElementById('password').classList.remove('input-error');
+        
+        // Get values
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const rememberMe = document.getElementById('remember').checked;
+        let isValid = true;
+        
+        // Validate email
+        if (!email) {
+          document.getElementById('emailError').textContent = 'Email is required';
+          document.getElementById('email').classList.add('input-error');
+          isValid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          document.getElementById('emailError').textContent = 'Please enter a valid email';
+          document.getElementById('email').classList.add('input-error');
+          isValid = false;
+        }
+        
+        // Validate password
+        if (!password) {
+          document.getElementById('passwordError').textContent = 'Password is required';
+          document.getElementById('password').classList.add('input-error');
+          isValid = false;
+        }
+        
+        // If valid, submit to API
+        if (isValid) {
+          try {
+            // Show loading state
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing in...';
+            submitBtn.disabled = true;
+            
+            // Prepare request data
+            const requestData = {
+              email: email,
+              password: password
+            };
+            
+            // Make API call
+            const response = await fetch('https://back.travelshanstar.com/api/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestData)
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+              // Save token to localStorage
+              localStorage.setItem('authToken', data.data.token);
+              
+              // If remember me is checked, save email (optional)
+              if (rememberMe) {
+                localStorage.setItem('rememberedEmail', email);
+              } else {
+                localStorage.removeItem('rememberedEmail');
+              }
+              
+              // Redirect to dashboard
+              window.location.href = 'dashbord.html';
+            } else {
+              // Show error message from server or default message
+              const errorMsg = data.message || 'Login failed. Please try again.';
+              document.getElementById('passwordError').textContent = errorMsg;
+              document.getElementById('email').classList.add('input-error');
+              document.getElementById('password').classList.add('input-error');
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            document.getElementById('passwordError').textContent = 'Network error. Please try again.';
+            document.getElementById('email').classList.add('input-error');
+            document.getElementById('password').classList.add('input-error');
+          } finally {
+            // Reset button state
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Sign In';
+            submitBtn.disabled = false;
+          }
+        }
+      });
+      
+      // Remove error when typing
+      document.getElementById('email').addEventListener('input', function() {
+        this.classList.remove('input-error');
+        document.getElementById('emailError').textContent = '';
+      });
+      
+      document.getElementById('password').addEventListener('input', function() {
+        this.classList.remove('input-error');
+        document.getElementById('passwordError').textContent = '';
+      });
+      
+      // Check for remembered email
+      const rememberedEmail = localStorage.getItem('rememberedEmail');
+      if (rememberedEmail) {
+        document.getElementById('email').value = rememberedEmail;
+        document.getElementById('remember').checked = true;
+      }
+    });
+  </script>
+</body>
+</html>
