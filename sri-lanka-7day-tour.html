@@ -12,6 +12,91 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <style>
+        /* Loading Animation Styles */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 8px solid transparent;
+            border-top-color: #f59e0b;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-circle:nth-child(2) {
+            border-top-color: #ef4444;
+            animation-delay: 0.2s;
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+        }
+
+        .loader-circle:nth-child(3) {
+            border-top-color: #3b82f6;
+            animation-delay: 0.4s;
+            width: 50%;
+            height: 50%;
+            top: 25%;
+            left: 25%;
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        .loader-logo {
+            width: 100px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Existing styles */
         * {
             margin: 0;
             padding: 0;
@@ -424,6 +509,17 @@
 </head>
 
 <body>
+    <!-- Loading Animation -->
+    <div id="loader" class="loader-container">
+        <img src="assets/logo.png" alt="Shan Travels Logo" class="loader-logo">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+        </div>
+        <div class="loader-text">Loading Your Adventure...</div>
+    </div>
+
     <div id="navbar-root"></div>
     <script type="text/babel">
         // Header/Navbar
@@ -1214,6 +1310,35 @@
         }, []);
     </script>
 
+    <!-- Loading Animation Script -->
+    <script>
+        // Hide loader when page is loaded
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500); // Match this with the transition duration
+            }
+        }
+
+        // Wait for everything to load
+        window.addEventListener('load', function() {
+            // Additional slight delay for better UX
+            setTimeout(hideLoader, 500);
+        });
+
+        // Initialize AOS animations
+        if (window.AOS) {
+            window.AOS.init({ 
+                once: true, 
+                duration: 900, 
+                easing: 'ease-out-cubic',
+                offset: 120
+            });
+        }
+    </script>
 </body>
 
 </html>
