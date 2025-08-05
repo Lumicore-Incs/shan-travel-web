@@ -633,16 +633,16 @@
                 </p>
 
                 {/* Filter/Search Bar */}
-<div className={`absolute hidden lg:flex flex-col lg:flex-row items-center justify-center gap-4 mb-10 px-4 py-4 rounded-xl custom-shadow border border-gray-100 w-full max-w-2xl mx-auto z-10 ${iconToggled ? 'floating-badge' : 'bg-red-50'}`}>                  <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
-                    <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
-                    </svg>
-                    <input
-                      type="text"
-                      placeholder="Where are you going?"
-                      className="outline-none w-full text-gray-700 bg-transparent text-sm"
-                    />
-                  </div>
+                <div className={`absolute hidden lg:flex flex-col lg:flex-row items-center justify-center gap-4 mb-10 px-4 py-4 rounded-xl custom-shadow border border-gray-100 w-full max-w-2xl mx-auto z-10 ${iconToggled ? 'floating-badge' : 'bg-red-50'}`}>                  <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                  <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Where are you going?"
+                    className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                  />
+                </div>
                   <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
                     <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -1044,13 +1044,14 @@
         }
         return destination.type === selectedFilter;
       });
+      const [isDisabled, setIsDisabled] = React.useState(true);
 
       // Limit to 6 destinations initially, show all if showAll is true
       const displayedDestinations = showAll ? filteredDestinations : filteredDestinations.slice(0, 6);
 
       return (
         <section id="destinations" className={`py-16 ${iconToggled ? 'bg-black' : 'bg-gray-50'}`} data-aos="fade-up">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-8">
             {/* Section Header */}
             <div className="bg-red-50 pb-1 pt-4 rounded-3xl custom-shadow mb-10">
               <div className="text-center mb-8">
@@ -1068,7 +1069,9 @@
 
               {/* Filter/Search Bar */}
               <div className="flex flex-col md:flex-row items-center justify-center gap-2 mb-10 bg-white px-4 py-6 rounded-xl custom-shadow border border-gray-100 w-full max-w-5xl mx-auto">
-                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+                {/* Search Bar */}
+                {/* Destination Field */}
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 w-full md:w-auto">
                   <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
                   </svg>
@@ -1076,19 +1079,25 @@
                     type="text"
                     placeholder="Where are you going?"
                     className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                    disabled={isDisabled}
                   />
                 </div>
-                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+
+                {/* People Field */}
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 w-full md:w-auto">
                   <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 12.414a6 6 0 10-1.414 1.414l4.243 4.243a1 1 0 001.414-1.414z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                   </svg>
                   <input
                     type="text"
                     placeholder="How many people?"
                     className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                    disabled={isDisabled}
                   />
                 </div>
-                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+
+                {/* Check-in Field */}
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 w-full md:w-auto">
                   <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -1096,9 +1105,12 @@
                     type="text"
                     placeholder="Check in"
                     className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                    disabled={isDisabled}
                   />
                 </div>
-                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 mr-0 md:mr-2">
+
+                {/* Check-out Field */}
+                <div className="flex items-center border border-gray-200 rounded-full px-4 py-2 flex-1 focus-within:border-yellow-400 transition-colors bg-gray-50 w-full md:w-auto">
                   <svg className="w-5 h-5 text-yellow-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -1106,8 +1118,11 @@
                     type="text"
                     placeholder="Check out"
                     className="outline-none w-full text-gray-700 bg-transparent text-sm"
+                    disabled={isDisabled}
                   />
                 </div>
+
+                {/* Get Started Button with Animation */}
                 <button
                   className="px-6 py-2 bg-yellow-500 text-white rounded-full font-semibold hover:bg-yellow-600 transition-all duration-300 custom-shadow hover:custom-shadow text-sm"
                   onClick={onGetStarted}
@@ -1417,6 +1432,14 @@
         return () => clearInterval(interval);
       }, [testimonials.length]);
 
+      const handleExploreClick = () => {
+        window.open(
+          "https://www.google.com/travel/search?q=Shan%20Star&g2lb=4965990%2C4969803%2C72302247%2C72317059%2C72414906%2C72471280%2C72472051%2C72485658%2C72560029%2C72573224%2C72616120%2C72647020%2C72648289%2C72686036%2C72760082%2C72803964%2C72832976%2C72882230%2C72958624%2C72959983%2C72990342&hl=en-LK&gl=lk&cs=1&ssta=1&ts=CAEaRwopEicyJTB4M2FlMTE1MWQ5ZjlhNzFjZjoweDQ5ZGI5MWE4MTQ1OGI5ZmUSGhIUCgcI6Q8QCBgFEgcI6Q8QCBgGGAEyAhAA&qs=CAEyE0Nnb0lfdlBpb29HMTVPMUpFQUU4AkIJCf65WBSokdtJQgkJ_rlYFKiR20k&ap=KigKEgnOFl5K-9YXQBGSS2Op_RlUQBISCTMFWEdC3hdAEZJLY4Y-GlRAugEHcmV2aWV3cw&ictx=111&ved=0CAAQ5JsGahcKEwjYq53VwfOOAxUAAAAAHQAAAAAQEg",
+          "_blank",
+          "noopener,noreferrer"
+        );
+      };
+
       return (
         <section id="testimonials" className={`py-16 ${iconToggled ? 'bg-black' : 'bg-white'}`} data-aos="fade-up">
           <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
@@ -1471,6 +1494,21 @@
                     />
                   ))}
                 </div>
+
+                {/* New Explore Button */}
+                <button
+                  onClick={handleExploreClick}
+                  className={`mt-6 w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2
+                ${iconToggled
+                      ? 'bg-yellow-500 hover:bg-yellow-600 text-gray-900'
+                      : 'bg-gray-900 hover:bg-gray-800 text-white'
+                    }`}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                  <span>Explore More on Google Travel</span>
+                </button>
               </div>
             </div>
 
